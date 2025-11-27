@@ -49,7 +49,7 @@ h1 {
 .temizle-btn {
   position: absolute;
   right: 50px;           /* masaüstü için eski konum */
-  top: 50%;
+  top: 30%;
   transform: translateY(-50%);
   border: none !important;
   background: none !important;
@@ -182,7 +182,7 @@ h1 {
   /* X işaretini input’un SAĞ içine al */
   .temizle-btn {
     right: 5px;        /* masaüstündeki 50px’i ez */
-    top: 50%;
+    top: 10%;
     font-size: 18px;
   }
 
@@ -206,4 +206,5 @@ h1 {
     box-sizing: border-box;
   }
 }
+
 
