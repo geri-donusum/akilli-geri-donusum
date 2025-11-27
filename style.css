@@ -29,7 +29,7 @@ input {
   width: 220px;
 }
 
-/* 🔘 Kutuyu Göster (MASAÜSTÜ – dokunulmadı) */
+/* 🔘 Kutuyu Göster – GENEL (masaüstü görünümü) */
 button {
   padding: 8px 12px;
   background-color: #4caf50;
@@ -39,7 +39,14 @@ button {
   cursor: pointer;
   font-weight: bold;
 }
-button:hover { background-color: #45a049; }
+button:hover {
+  background-color: #45a049;
+}
+
+/* Özellikle ana butona sınıf da veriyoruz */
+.goster-btn {
+  /* masaüstünde button ile aynı davranır, mobilde ayrıca genişleteceğiz */
+}
 
 /* ❌ Temizle X */
 .temizle-btn {
@@ -55,7 +62,9 @@ button:hover { background-color: #45a049; }
   opacity: 0;
   transition: opacity 0.2s ease;
 }
-input:not(:placeholder-shown) + .temizle-btn { opacity: 1; }
+input:not(:placeholder-shown) + .temizle-btn {
+  opacity: 1;
+}
 
 /* 🧠 Öneri kutusu */
 .suggestion-box {
@@ -122,13 +131,18 @@ input:not(:placeholder-shown) + .temizle-btn { opacity: 1; }
 
 .uyari-ikon { font-size: 28px; color: #ff4c4c; }
 
-/* 📱 MOBİL – SADECE BUTONU AYNI GENİŞLİKTE YAPAR */
+/* 📱 MOBİL: Tüm telefonlarda aynı hizalama ve genişlik */
 @media (max-width: 600px) {
 
-  body { margin: 20px; }
+  /* Sayfa kenar boşluklarını biraz azalt */
+  body {
+    margin: 20px 10px;
+  }
 
+  /* Tüm içerik ortada toplansın */
   .arama-alani {
     width: 90%;
+    max-width: 420px;
     display: block;
     margin: 0 auto;
   }
@@ -136,7 +150,7 @@ input:not(:placeholder-shown) + .temizle-btn { opacity: 1; }
   input {
     width: 100%;
     border-radius: 6px;
-    padding-right: 40px;
+    padding-right: 40px; /* X için yer */
   }
 
   .temizle-btn {
@@ -146,14 +160,17 @@ input:not(:placeholder-shown) + .temizle-btn { opacity: 1; }
 
   .suggestion-box {
     width: 100%;
-    max-height: calc(100vh - 220px);
+    max-width: 420px;
+    max-height: calc(100vh - 230px);
     overflow-y: auto;
   }
 
-  /* 📌 BUTON = ARAMA KUTUSU GENİŞLİĞİ */
-  button {
-    width: 100%;
-    margin-top: 10px;
+  /* 📌 ANA BUTON – her telefonda input ile aynı genişlikte, ortada */
+  .goster-btn {
+    display: block;
+    width: 90%;
+    max-width: 420px;
+    margin: 10px auto 0;
     border-radius: 6px;
     padding: 12px;
     font-size: 17px;
