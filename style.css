@@ -48,7 +48,7 @@ h1 {
 /* ❌ Temizle (X) — input’un içinde, ARKA PLAN YOK (masaüstü) */
 .temizle-btn {
   position: absolute;
-  right: 100px;           /* masaüstü için eski konum */
+  right: 50px;           /* masaüstü için eski konum */
   top: 50%;
   transform: translateY(-50%);
   border: none !important;
@@ -181,7 +181,7 @@ h1 {
 
   /* X işaretini input’un SAĞ içine al */
   .temizle-btn {
-    right: 10px;        /* masaüstündeki 100px’i ez */
+    right: 5px;        /* masaüstündeki 50px’i ez */
     top: 50%;
     font-size: 18px;
   }
@@ -206,3 +206,4 @@ h1 {
     box-sizing: border-box;
   }
 }
+
