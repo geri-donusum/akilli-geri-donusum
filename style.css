@@ -26,7 +26,7 @@ input {
   font-size: 16px;
   border-radius: 4px 0 0 4px;
   border: 1px solid #ccc;
-  width: 200px;
+  width: 220px;
 }
 
 /* 🔘 Kutuyu Göster – GENEL (masaüstü görünümü) */
@@ -176,4 +176,5 @@ input:not(:placeholder-shown) + .temizle-btn {
     font-size: 17px;
   }
 }
+
 
