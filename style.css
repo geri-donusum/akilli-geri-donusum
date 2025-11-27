@@ -48,8 +48,11 @@ h1 {
 /* ❌ Temizle (X) — input’un içinde, ARKA PLAN YOK (masaüstü) */
 .temizle-btn {
   position: absolute;
-  right: 50px;           /* masaüstü için eski konum */
-  top: 30%;
+  /* arama-alani genişliği üzerinden hesapla:
+     100% = input(280px) + buton
+     => right = buton genişliği + 8px  */
+  right: calc(100% - 280px + 8px);
+  top: 50%;
   transform: translateY(-50%);
   border: none !important;
   background: none !important;
@@ -179,10 +182,10 @@ h1 {
     font-size: 16px;
   }
 
-  /* X işaretini input’un SAĞ içine al */
+  /* X işaretini input’un SAĞ içine al (telefonda) */
   .temizle-btn {
-    right: 5px;        /* masaüstündeki 50px’i ez */
-    top: 4%;
+    right: 8px;
+    top: 50%;
     font-size: 18px;
   }
 
@@ -206,6 +209,3 @@ h1 {
     box-sizing: border-box;
   }
 }
-
-
-
