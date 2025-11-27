@@ -14,77 +14,56 @@ h1 {
   user-select: none;
 }
 
-/* 🔍 Arama alanı – masaüstü varsayılan */
+/* 🔍 Arama alanı */
 .arama-alani {
   display: inline-block;
-  position: relative;  /* X ikonunun referansı */
+  position: relative;
   text-align: left;
 }
 
-/* Arama kutusu (masaüstü varsayılan) */
-.arama-alani input {
-  padding: 8px 32px 8px 8px; /* sağda X için boşluk */
+input {
+  padding: 8px 35px 8px 8px;
   font-size: 16px;
-  border-radius: 4px 0 0 4px;
+  border-radius: 4px;
   border: 1px solid #ccc;
-  width: 220px;
+  width: 260px;
   box-sizing: border-box;
 }
 
-/* 🔘 Kutuyu Göster – masaüstü varsayılan (input ile yan yana) */
-.goster-btn {
-  padding: 8px 12px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 0 4px 4px 0;
-  cursor: pointer;
-  font-weight: bold;
-}
-.goster-btn:hover {
-  background-color: #45a049;
-}
-
-/* ❌ Temizle (X) – input’un içinde, arka plan yok */
+/* ❌ Temizle (X) */
 .temizle-btn {
   position: absolute;
+  right: 10px;
   top: 50%;
-  right: 12px;                 /* tüm cihazlarda inputun sağında */
   transform: translateY(-50%);
-  border: none;
-  background: none;
+  border: none !important;
+  background: none !important;
   color: #999;
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.2s ease, color 0.2s ease;
-  box-shadow: none;
+  transition: opacity 0.2s ease;
 }
 
-/* input boş değilken X görünsün */
-.arama-alani input:not(:placeholder-shown) ~ .temizle-btn {
+input:not(:placeholder-shown) + .temizle-btn {
   opacity: 1;
 }
 
-.temizle-btn:hover,
-.temizle-btn:focus,
-.temizle-btn:active {
-  background: none;
+.temizle-btn:hover {
   color: #555;
-  box-shadow: none;
 }
 
-/* 🧠 Öneri kutusu (masaüstü) */
+/* 🧠 Öneri kutusu */
 .suggestion-box {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 220px;
+  width: 260px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-top: none;
   border-radius: 0 0 6px 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   z-index: 10;
   text-align: left;
 }
@@ -95,10 +74,26 @@ h1 {
   color: #555;
   cursor: pointer;
 }
+
 .suggestion-item:hover,
 .suggestion-item.active {
   background-color: #f0fdf4;
   color: #000;
+}
+
+/* 🔘 Kutuyu Göster butonu (masaüstü normal) */
+#gosterBtn {
+  padding: 10px 18px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+}
+#gosterBtn:hover {
+  background-color: #45a049;
 }
 
 /* 🟩 Renk kutusu + başlık hizalaması */
@@ -125,7 +120,7 @@ h1 {
 .kutu-icon.gri { background: #999; }
 
 .baslik-yazi { font-size: 22px; font-weight: 900; }
-.atik-cumle  { font-size: 18px; color: #000; margin-bottom: 10px; }
+.atik-cumle { font-size: 18px; color: #000; margin-bottom: 10px; }
 
 .bilgi-metni {
   font-size: 15px;
@@ -147,46 +142,47 @@ h1 {
   line-height: 1;
 }
 
-/* 📱 MOBİL DÜZEN – sadece küçük ekranlarda (iPhone 7, 13 vs hepsi) */
+/* 📱 MOBİL DÜZENLEMELER */
 @media (max-width: 600px) {
   body {
-    margin: 24px 12px;
+    margin: 20px;
   }
 
-  /* Arama alanını ortala ve genişlet */
+  /* Arama alanı ortalanır */
   .arama-alani {
+    width: 90%;
     display: block;
-    width: 100%;
-    max-width: 480px;
     margin: 0 auto;
   }
 
-  /* Input tam genişlik ve tek başına satır */
-  .arama-alani input {
+  input {
     width: 100%;
-    border-radius: 4px;           /* her köşe yuvarlak */
-    padding: 10px 34px 10px 10px; /* X için sağ boşluk biraz daha büyük */
-    box-sizing: border-box;
   }
 
-  /* X her telefonda input’un içinde, sağda */
+  /* X tamamen input içinde */
   .temizle-btn {
-    right: 14px;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 12px;
+    font-size: 18px;
   }
 
-  /* Kutuyu Göster butonu input’un altında, tam genişlik */
-  .goster-btn {
-    display: block;
-    width: 100%;
-    max-width: 480px;
-    margin: 8px auto 0;
-    border-radius: 4px;
-  }
-
-  /* Öneri kutusu da input genişliği kadar olsun */
+  /* Öneri kutusu tam uyumlu */
   .suggestion-box {
     width: 100%;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+  }
+
+  /* 📌 Kutuyu Göster – Mobilde fixed */
+  #gosterBtn {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    padding: 14px 0;
+    border-radius: 10px;
+    font-size: 18px;
+    z-index: 9999;
+    margin: 0;
   }
 }
