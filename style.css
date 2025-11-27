@@ -29,7 +29,7 @@ input {
   width: 220px;
 }
 
-/* 🔘 Genel “Kutuyu Göster” butonu */
+/* 🔘 “Kutuyu Göster” butonu */
 button {
   padding: 8px 12px;
   background-color: #4caf50;
@@ -41,29 +41,24 @@ button {
 }
 button:hover { background-color: #45a049; }
 
-/* ❌ Temizle (X) — input’un içinde, ARKA PLAN YOK */
+/* ❌ Temizle (X) — input’un içinde */
 .temizle-btn {
   position: absolute;
-  right: 130px;           /* gerekirse ufakça ayarlayabilirsin */
+  right: 130px;
   top: 50%;
   transform: translateY(-50%);
   border: none !important;
-  background: none !important;   /* yeşil arka planı tamamen engelle */
+  background: none !important;
   color: #999;
   font-size: 16px;
-  cursor: pointer;               /* sadece imleç değişir */
+  cursor: pointer;
   opacity: 0;
   transition: opacity 0.2s ease, color 0.2s ease;
   box-shadow: none !important;
 }
+
 input:not(:placeholder-shown) + .temizle-btn { opacity: 1; }
-.temizle-btn:hover,
-.temizle-btn:focus,
-.temizle-btn:active {
-  background: none !important;   /* hover’da da arka plan olmasın */
-  color: #555;                   /* isteğe bağlı hafif koyulaşma */
-  box-shadow: none !important;
-}
+.temizle-btn:hover { color: #555; }
 
 /* 🧠 Öneri kutusu */
 .suggestion-box {
@@ -98,7 +93,7 @@ input:not(:placeholder-shown) + .temizle-btn { opacity: 1; }
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-top: 25px;     /* arama alanıyla arası ferah */
+  margin-top: 25px;
   margin-bottom: 10px;
 }
 
@@ -117,6 +112,7 @@ input:not(:placeholder-shown) + .temizle-btn { opacity: 1; }
 
 .baslik-yazi { font-size: 22px; font-weight: 900; }
 .atik-cumle  { font-size: 18px; color: #000; margin-bottom: 10px; }
+
 .bilgi-metni {
   font-size: 15px;
   color: #444;
@@ -131,51 +127,29 @@ input:not(:placeholder-shown) + .temizle-btn { opacity: 1; }
   margin-top: 6px;
 }
 
-.uyari-ikon { font-size: 28px; color: #ff4c4c; line-height: 1; }
+.uyari-ikon {
+  font-size: 28px;
+  color: #ff4c4c;
+  line-height: 1;
+}
 
+/* 📱 SADECE TELEFON İÇİN X KONUMU DÜZELTİLDİ */
+@media (max-width: 600px) {
 
-/* 📱 MOBİL İÇİN DOKUNMADAN UYUMLU HALE GETİRME */
-@media (max-width: 480px) {
-
-  /* Kenarlardaki boşlukları telefonda biraz azalt */
-  body {
-    margin: 16px 12px;
+  .arama-alani input {
+    width: 260px;
   }
 
-  h1 {
-    font-size: 22px;
-    margin-bottom: 10px;
+  .suggestion-box {
+    width: 260px !important;
+    left: 0 !important;
   }
 
-  /* Arama alanı ortalansın ama yapısı bozulmasın */
-  .arama-alani {
-    display: inline-block;
-    text-align: left;
-  }
-
-  /* Input biraz daha esnek olsun ama masaüstü mantığı bozulmasın */
-  input {
-    width: 210px;
-    font-size: 15px;
-  }
-
-  /* X işaretinin konumu telefonda çok hafif içe çekilsin */
   .temizle-btn {
-    right: 120px;
-    font-size: 15px;
+    right: 40px !important; /* X artık telefonda input’un içine girer */
   }
 
-  /* Sonuç metinleri biraz küçülsün, ekrana daha rahat sığsın */
-  .baslik-yazi {
-    font-size: 20px;
-  }
-
-  .atik-cumle {
-    font-size: 16px;
-  }
-
-  .bilgi-metni {
-    font-size: 14px;
-    max-width: 90vw; /* telefonda taşmasın */
+  body {
+    margin: 20px;
   }
 }
