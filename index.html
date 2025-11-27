@@ -8,21 +8,33 @@
 </head>
 
 <body>
-  <!-- 🔰 Uygulama Başlığı -->
+
+  <!-- 🌱 Uygulama Başlığı -->
   <h1 id="appTitle">♻️ <span>Akıllı Geri Dönüşüm</span></h1>
 
   <!-- 🔍 Arama Alanı -->
-  <div class="arama-alani" style="position: relative;">
-    <input type="text" id="inputAtik" placeholder="Atık adını yaz..." />
-    <button class="temizle-btn" onclick="temizleInput()">×</button>
-    <button onclick="bul()">Kutuyu Göster</button>
-    <div class="suggestion-box"></div>
+  <div class="arama-alani">
+      <input 
+          type="text" 
+          id="inputAtik" 
+          placeholder="Atık adını yaz..." 
+      />
+
+      <!-- X temizleme butonu -->
+      <button class="temizle-btn" onclick="temizleInput()">×</button>
+
+      <!-- Öneri kutusu -->
+      <div class="suggestion-box"></div>
   </div>
 
-  <!-- 💡 Sonuç Alanı -->
+  <!-- Kutuyu Göster butonu -->
+  <button class="goster-btn" onclick="bul()">Kutuyu Göster</button>
+
+  <!-- Sonuç Alanı -->
   <div id="sonuc"></div>
 
-  <!-- ⚙️ JavaScript Dosyası -->
+  <!-- 📌 Script -->
   <script src="script.js"></script>
+
 </body>
 </html>
