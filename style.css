@@ -138,50 +138,42 @@ input:not(:placeholder-shown) + .temizle-btn { opacity: 1; }
   line-height: 1; 
 }
 
-/* 📱 Mobil Düzenlemeler — Masaüstünü BOZMAZ */
+/* 📱 Mobil görünüm düzenlemeleri */
 @media (max-width: 600px) {
 
-  body {
-    margin: 20px;
+  /* Arama alanını ortala */
+  .arama-alani {
+    width: 90%;
+    margin: 0 auto;
+    display: block;
     text-align: center;
   }
 
-  /* Arama alanı ortada */
-  .arama-alani {
-    width: 90%;
-    max-width: 350px;
-    margin: 0 auto;
-    display: block;
-    position: relative;
-    text-align: left;
-  }
-
   /* Input tam genişlik */
-  input {
+  #inputAtik {
     width: 100%;
-    font-size: 17px;
-    padding-right: 35px;
+    box-sizing: border-box;
+    padding-right: 35px; /* X için iç boşluk */
   }
 
-  /* X işareti inputun İÇİNDE */
+  /* ❌ X ikonunun düzeltilmiş mobil konumu */
   .temizle-btn {
-    right: 10px !important;
+    right: 10px !important;     /* tam sağ içeri */
     top: 50%;
     transform: translateY(-50%);
-    font-size: 18px;
     opacity: 1;
+    pointer-events: auto;
   }
 
-  /* Kutuyu Göster butonu ortada ve alt satırda */
-  button {
-    width: 100%;
-    max-width: 200px;
+  /* Kutuyu Göster butonu ortalı ve aşağıda */
+  .arama-alani button:not(.temizle-btn) {
     display: block;
-    margin: 8px auto 0 auto;
+    width: 100%;
+    margin: 10px auto 0 auto;
     border-radius: 6px;
   }
 
-  /* Öneri kutusu inputun altında tam hizalı */
+  /* Öneri kutusu input altına tam otursun */
   .suggestion-box {
     width: 100% !important;
     left: 0 !important;
