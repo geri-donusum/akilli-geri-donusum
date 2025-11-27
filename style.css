@@ -14,25 +14,23 @@ h1 {
   user-select: none;
 }
 
-/* 🔍 Arama alanı – masaüstü varsayılan */
+/* 🔍 Arama alanı */
 .arama-alani {
   display: inline-block;
-  position: relative;  /* X ikonunun referansı */
+  position: relative;
   text-align: left;
 }
 
-/* Arama kutusu (masaüstü varsayılan) */
-.arama-alani input {
-  padding: 8px 32px 8px 8px; /* sağda X için boşluk */
+input {
+  padding: 8px 35px 8px 8px; /* sağda x ikonu için boşluk */
   font-size: 16px;
   border-radius: 4px 0 0 4px;
   border: 1px solid #ccc;
   width: 220px;
-  box-sizing: border-box;
 }
 
-/* 🔘 Kutuyu Göster – masaüstü varsayılan (input ile yan yana) */
-.goster-btn {
+/* 🔘 Genel “Kutuyu Göster” butonu */
+button {
   padding: 8px 12px;
   background-color: #4caf50;
   color: white;
@@ -41,40 +39,25 @@ h1 {
   cursor: pointer;
   font-weight: bold;
 }
-.goster-btn:hover {
-  background-color: #45a049;
-}
+button:hover { background-color: #45a049; }
 
-/* ❌ Temizle (X) – input’un içinde, arka plan yok */
+/* ❌ Temizle (X) — input’un içinde */
 .temizle-btn {
   position: absolute;
+  right: 12px;
   top: 50%;
-  right: 12px;                 /* tüm cihazlarda inputun sağında */
   transform: translateY(-50%);
-  border: none;
-  background: none;
+  border: none !important;
+  background: none !important;
   color: #999;
   font-size: 18px;
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.2s ease, color 0.2s ease;
-  box-shadow: none;
+  transition: opacity 0.2s ease;
 }
+input:not(:placeholder-shown) + .temizle-btn { opacity: 1; }
 
-/* input boş değilken X görünsün */
-.arama-alani input:not(:placeholder-shown) ~ .temizle-btn {
-  opacity: 1;
-}
-
-.temizle-btn:hover,
-.temizle-btn:focus,
-.temizle-btn:active {
-  background: none;
-  color: #555;
-  box-shadow: none;
-}
-
-/* 🧠 Öneri kutusu (masaüstü) */
+/* 🧠 Öneri kutusu */
 .suggestion-box {
   position: absolute;
   top: 100%;
@@ -111,12 +94,10 @@ h1 {
   margin-bottom: 10px;
 }
 
-/* 🎨 Renk ikonları */
 .kutu-icon {
   width: 30px;
   height: 30px;
   border-radius: 6px;
-  display: inline-block;
 }
 .kutu-icon.mavi { background: #007BFF; }
 .kutu-icon.kırmızı { background: #FF4C4C; }
@@ -125,8 +106,7 @@ h1 {
 .kutu-icon.gri { background: #999; }
 
 .baslik-yazi { font-size: 22px; font-weight: 900; }
-.atik-cumle  { font-size: 18px; color: #000; margin-bottom: 10px; }
-
+.atik-cumle { font-size: 18px; color: #000; margin-bottom: 10px; }
 .bilgi-metni {
   font-size: 15px;
   color: #444;
@@ -141,52 +121,64 @@ h1 {
   margin-top: 6px;
 }
 
+/* 🔥 UYARI İKONU */
 .uyari-ikon {
   font-size: 28px;
   color: #ff4c4c;
   line-height: 1;
 }
 
-/* 📱 MOBİL DÜZEN – sadece küçük ekranlarda (iPhone 7, 13 vs hepsi) */
+/* 📱 MOBİL GÖRÜNÜM (600px altı) */
 @media (max-width: 600px) {
+
   body {
-    margin: 24px 12px;
+    margin: 20px;
   }
 
-  /* Arama alanını ortala ve genişlet */
+  /* Arama kutusu ortalanmış */
   .arama-alani {
+    width: 90%;
     display: block;
-    width: 100%;
-    max-width: 480px;
     margin: 0 auto;
   }
 
-  /* Input tam genişlik ve tek başına satır */
-  .arama-alani input {
+  /* Input tam genişlik */
+  input {
     width: 100%;
-    border-radius: 4px;           /* her köşe yuvarlak */
-    padding: 10px 34px 10px 10px; /* X için sağ boşluk biraz daha büyük */
-    box-sizing: border-box;
+    border-radius: 6px;
+    padding-right: 40px;
   }
 
-  /* X her telefonda input’un içinde, sağda */
+  /* X ikonu input içinde */
   .temizle-btn {
-    right: 14px;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 10px;
+    font-size: 20px;
   }
 
-  /* Kutuyu Göster butonu input’un altında, tam genişlik */
-  .goster-btn {
-    display: block;
-    width: 100%;
-    max-width: 480px;
-    margin: 8px auto 0;
-    border-radius: 4px;
-  }
-
-  /* Öneri kutusu da input genişliği kadar olsun */
+  /* Öneri kutusu genişliği */
   .suggestion-box {
     width: 100%;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+  }
+
+  /* 📌 Kutuyu Göster – sabit ve MASAÜSTÜYLE AYNI YEŞİL */
+  #gosterBtn {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    padding: 14px 0;
+    border-radius: 10px;
+    font-size: 18px;
+    z-index: 9999;
+    margin: 0;
+    background-color: #4caf50;  /* MASAÜSTÜYLE AYNI */
+    color: #fff;
+  }
+
+  #gosterBtn:hover {
+    background-color: #45a049; /* MASAÜSTÜYLE AYNI */
   }
 }
