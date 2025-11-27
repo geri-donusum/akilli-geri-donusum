@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akıllı Geri Dönüşüm</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- 🔰 Uygulama Başlığı -->
+  <h1 id="appTitle">♻️ <span>Akıllı Geri Dönüşüm</span></h1>
+
+  <!-- 🔍 Arama Alanı -->
+  <div class="arama-alani" style="position: relative;">
+    <input type="text" id="inputAtik" placeholder="Atık adını yaz..." />
+    <button class="temizle-btn" onclick="temizleInput()">×</button>
+    <button onclick="bul()">Kutuyu Göster</button>
+    <div class="suggestion-box"></div>
+  </div>
+
+  <!-- 💡 Sonuç Alanı -->
+  <div id="sonuc"></div>
+
+  <!-- ⚙️ JavaScript Dosyası -->
+  <script src="script.js"></script>
+</body>
+</html>
