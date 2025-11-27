@@ -22,15 +22,15 @@ h1 {
 }
 
 input {
-  padding: 8px 35px 8px 8px;
+  padding: 8px 35px 8px 8px; /* sağda x ikonu için boşluk */
   font-size: 16px;
   border-radius: 4px 0 0 4px;
   border: 1px solid #ccc;
   width: 220px;
 }
 
-/* 🔘 Genel “Kutuyu Göster” butonu (masaüstü görünümü) */
-#gosterBtn {
+/* 🔘 Genel “Kutuyu Göster” butonu */
+button {
   padding: 8px 12px;
   background-color: #4caf50;
   color: white;
@@ -39,9 +39,9 @@ input {
   cursor: pointer;
   font-weight: bold;
 }
-#gosterBtn:hover { background-color: #45a049; }
+button:hover { background-color: #45a049; }
 
-/* ❌ Temizle X */
+/* ❌ Temizle (X) — input’un içinde */
 .temizle-btn {
   position: absolute;
   right: 12px;
@@ -57,7 +57,7 @@ input {
 }
 input:not(:placeholder-shown) + .temizle-btn { opacity: 1; }
 
-/* 🧠 Öneri Kutusu */
+/* 🧠 Öneri kutusu */
 .suggestion-box {
   position: absolute;
   top: 100%;
@@ -84,7 +84,7 @@ input:not(:placeholder-shown) + .temizle-btn { opacity: 1; }
   color: #000;
 }
 
-/* 🟩 Renk kutusu + başlık hizası */
+/* 🟩 Renk kutusu + başlık hizalaması */
 .renk-baslik {
   display: flex;
   align-items: center;
@@ -121,30 +121,35 @@ input:not(:placeholder-shown) + .temizle-btn { opacity: 1; }
   margin-top: 6px;
 }
 
+/* 🔥 UYARI İKONU */
 .uyari-ikon {
   font-size: 28px;
   color: #ff4c4c;
   line-height: 1;
 }
 
-/* 📱 MOBİL GÖRÜNÜM */
+/* 📱 MOBİL GÖRÜNÜM (600px altı) */
 @media (max-width: 600px) {
 
-  body { margin: 20px; }
+  body {
+    margin: 20px;
+  }
 
-  /* Arama alanı tam genişlik */
+  /* Arama kutusu ortalanmış */
   .arama-alani {
     width: 90%;
     display: block;
     margin: 0 auto;
   }
 
+  /* Input tam genişlik */
   input {
     width: 100%;
     border-radius: 6px;
     padding-right: 40px;
   }
 
+  /* X ikonu input içinde */
   .temizle-btn {
     right: 10px;
     font-size: 20px;
@@ -153,22 +158,27 @@ input:not(:placeholder-shown) + .temizle-btn { opacity: 1; }
   /* Öneri kutusu genişliği */
   .suggestion-box {
     width: 100%;
-    max-height: calc(100vh - 220px);
+    max-height: calc(100vh - 200px);
     overflow-y: auto;
   }
 
-  /* 📌 Kutuyu Göster — arama kutusuyla aynı genişlik */
+  /* 📌 Kutuyu Göster – sabit ve MASAÜSTÜYLE AYNI YEŞİL */
   #gosterBtn {
-    display: block;
-    width: 90%;
-    margin: 12px auto 0 auto;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
     padding: 14px 0;
+    border-radius: 10px;
     font-size: 18px;
-    border-radius: 8px;
-    background-color: #4caf50;
+    z-index: 9999;
+    margin: 0;
+    background-color: #4caf50;  /* MASAÜSTÜYLE AYNI */
+    color: #fff;
   }
 
   #gosterBtn:hover {
-    background-color: #45a049;
+    background-color: #45a049; /* MASAÜSTÜYLE AYNI */
   }
 }
