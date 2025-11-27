@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Akıllı Geri Dönüşüm</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -21,21 +21,12 @@
       autocomplete="off"
     />
     <!-- X butonu -->
-    <button
-      type="button"
-      class="temizle-btn"
-      onclick="temizleInput()"
-      aria-label="Temizle"
-    >
-      ×
-    </button>
+    <button class="temizle-btn" type="button" onclick="temizleInput()">✕</button>
 
-    <!-- Masaüstünde input’un yanında, mobilde altında gözüken buton -->
-    <button type="button" id="bulBtn" onclick="bul()">
-      Kutuyu Göster
-    </button>
+    <!-- Masaüstünde inputun sağındaki buton, mobilde inputun altında tam genişlik -->
+    <button id="bulBtn" type="button" onclick="bul()">Kutuyu Göster</button>
 
-    <!-- Öneri kutusu -->
+    <!-- Öneri Kutusu -->
     <div class="suggestion-box"></div>
   </div>
 
