@@ -2,20 +2,17 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Akıllı Geri Dönüşüm</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- 🟢 Uygulama Başlığı -->
+  <!-- Uygulama Başlığı -->
   <h1 id="appTitle">
     ♻️ Akıllı Geri Dönüşüm
   </h1>
 
-  <!-- 🔍 Arama Alanı -->
+  <!-- Arama Alanı -->
   <div class="arama-alani">
     <input
       type="text"
@@ -23,32 +20,28 @@
       placeholder="Atık adını yaz..."
       autocomplete="off"
     />
-    <!-- X butonu (temizle) -->
+    <!-- X butonu -->
     <button
       type="button"
       class="temizle-btn"
       onclick="temizleInput()"
+      aria-label="Temizle"
     >
       ×
+    </button>
+
+    <!-- Masaüstünde input’un yanında, mobilde altında gözüken buton -->
+    <button type="button" id="bulBtn" onclick="bul()">
+      Kutuyu Göster
     </button>
 
     <!-- Öneri kutusu -->
     <div class="suggestion-box"></div>
   </div>
 
-  <!-- ✅ Kutuyu Göster Butonu -->
-  <button
-    type="button"
-    class="goster-btn"
-    onclick="bul()"
-  >
-    Kutuyu Göster
-  </button>
-
-  <!-- 📌 Sonuç Alanı -->
+  <!-- Sonuç Alanı -->
   <div id="sonuc"></div>
 
-  <!-- 🧠 JavaScript Dosyası -->
   <script src="script.js"></script>
 </body>
 </html>
