@@ -132,3 +132,50 @@ input:not(:placeholder-shown) + .temizle-btn { opacity: 1; }
 }
 
 .uyari-ikon { font-size: 28px; color: #ff4c4c; line-height: 1; }
+
+
+/* 📱 MOBİL İÇİN DOKUNMADAN UYUMLU HALE GETİRME */
+@media (max-width: 480px) {
+
+  /* Kenarlardaki boşlukları telefonda biraz azalt */
+  body {
+    margin: 16px 12px;
+  }
+
+  h1 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  /* Arama alanı ortalansın ama yapısı bozulmasın */
+  .arama-alani {
+    display: inline-block;
+    text-align: left;
+  }
+
+  /* Input biraz daha esnek olsun ama masaüstü mantığı bozulmasın */
+  input {
+    width: 210px;
+    font-size: 15px;
+  }
+
+  /* X işaretinin konumu telefonda çok hafif içe çekilsin */
+  .temizle-btn {
+    right: 120px;
+    font-size: 15px;
+  }
+
+  /* Sonuç metinleri biraz küçülsün, ekrana daha rahat sığsın */
+  .baslik-yazi {
+    font-size: 20px;
+  }
+
+  .atik-cumle {
+    font-size: 16px;
+  }
+
+  .bilgi-metni {
+    font-size: 14px;
+    max-width: 90vw; /* telefonda taşmasın */
+  }
+}
