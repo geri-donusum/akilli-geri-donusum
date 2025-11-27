@@ -178,7 +178,7 @@ h1 {
   /* X işareti inputun İÇİNDE, sağ tarafa otursun */
   .temizle-btn {
     right: 12px;              /* artık sabit küçük boşluk */
-    top: 50%;
+    top: 60%;
     transform: translateY(-50%);
   }
 
@@ -199,4 +199,5 @@ h1 {
     padding: 12px 10px;
   }
 }
+
 
