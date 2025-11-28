@@ -1,4 +1,4 @@
-/* 🌿 GENEL GÖRÜNÜM (Masaüstü görünümüne dokunmuyoruz) */
+/* 🌿 GENEL GÖRÜNÜM – MASAÜSTÜ TASARIMI */
 body {
   font-family: Arial, sans-serif;
   text-align: center;
@@ -14,63 +14,78 @@ h1 {
   user-select: none;
 }
 
-/* 🔍 Arama alanı */
+/* 🔍 Arama alanı (masaüstü) */
 .arama-alani {
   display: inline-block;
   position: relative;
   text-align: left;
 }
 
-input {
-  padding: 8px 35px 8px 8px; 
+/* Arama inputu */
+.arama-alani input {
+  padding: 8px 36px 8px 10px; /* sağda X için boşluk */
   font-size: 16px;
-  border-radius: 6px;
+  border-radius: 4px 0 0 4px;
   border: 1px solid #ccc;
-  width: 320px;
-  height: 42px;
+  width: 220px; /* MASAÜSTÜ GENİŞLİĞİ: değiştirmiyoruz */
+  box-sizing: border-box;
 }
 
-/* ❌ Temizle (X) */
+/* Genel buton stilleri */
+#bulBtn {
+  padding: 8px 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+#bulBtn:hover {
+  background-color: #45a049;
+}
+
+/* ❌ Temizle (X) – masaüstü konumu (eski görünüme yakın) */
 .temizle-btn {
   position: absolute;
-  right: 10px;
   top: 50%;
   transform: translateY(-50%);
+  /* MASAÜSTÜ: input genişliği + küçük pay = 130px – senin kullandığın değer */
+  right: 130px;
   border: none;
   background: none;
   color: #999;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.2s ease, color 0.2s ease;
-}
-
-input:not(:placeholder-shown) + .temizle-btn {
-  opacity: 1;
+  padding: 0;
 }
 
 .temizle-btn:hover {
   color: #555;
 }
 
-/* 🧠 Öneri kutusu */
+/* 🧠 Öneri kutusu – masaüstü */
 .suggestion-box {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 320px;
+  width: 220px; /* input ile aynı genişlik */
   background-color: #fff;
   border: 1px solid #ddd;
   border-top: none;
   border-radius: 0 0 6px 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   z-index: 10;
   text-align: left;
+  max-height: 260px;
+  overflow-y: auto;
 }
 
 .suggestion-item {
-  padding: 10px 12px;
-  font-size: 15px;
+  padding: 8px 10px;
+  font-size: 14px;
   color: #555;
   cursor: pointer;
 }
@@ -79,24 +94,6 @@ input:not(:placeholder-shown) + .temizle-btn {
 .suggestion-item.active {
   background-color: #f0fdf4;
   color: #000;
-}
-
-/* 🔘 Kutu Göster butonu */
-#ara-btn {
-  padding: 10px 12px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  width: 320px;
-  font-size: 16px;
-  margin-top: 10px;
-}
-
-#ara-btn:hover {
-  background-color: #45a049;
 }
 
 /* 🟩 Renk kutusu + başlık hizalaması */
@@ -116,10 +113,11 @@ input:not(:placeholder-shown) + .temizle-btn {
   border-radius: 6px;
   display: inline-block;
 }
-.kutu-icon.mavi { background: #007BFF; }
-.kutu-icon.kırmızı { background: #FF4C4C; }
+
+.kutu-icon.mavi { background: #007bff; }
+.kutu-icon.kırmızı { background: #ff4c4c; }
 .kutu-icon.yeşil { background: #28a745; }
-.kutu-icon.sarı { background: #FFD43B; }
+.kutu-icon.sarı { background: #ffd43b; }
 .kutu-icon.gri { background: #999; }
 
 .baslik-yazi {
@@ -153,50 +151,51 @@ input:not(:placeholder-shown) + .temizle-btn {
   line-height: 1;
 }
 
-/* 📱📱📱 MOBİL DÜZENLEMELER (Her ekranda aynı görünüm) */
+/* -------------------------------------------------- */
+/* 📱 MOBİL DÜZEN – TÜM TELEFONLARDA 1. VE 2. GÖRSEL GİBİ */
+/* -------------------------------------------------- */
+
 @media (max-width: 768px) {
 
   body {
-    margin: 20px;
+    margin: 16px;
   }
 
+  /* Arama alanı ortalı, genişliği ekranla birlikte esnesin */
   .arama-alani {
+    display: block;
+    max-width: 480px;
     width: 100%;
-    max-width: 92%;
-    margin: 0 auto;
+    margin: 0 auto 12px;
   }
 
-  input {
+  /* Input tam genişlik */
+  .arama-alani input {
     width: 100%;
-    height: 48px;
-    padding-right: 42px;
-    font-size: 17px;
+    border-radius: 4px;
   }
 
-  /* 📌 X işareti burada düzeliyor */
+  /* X işareti inputun İÇİNDE, sağ tarafa otursun */
   .temizle-btn {
-    right: 14px !important;
-    top: 50% !important;
-    transform: translateY(-60%) !important;
-    font-size: 26px !important; 
-    color: #777 !important;
-    opacity: 1 !important;
+    right: 12px;              /* artık sabit küçük boşluk */
+    top: 50%;
+    transform: translateY(-50%);
   }
 
-  /* Kutu Göster butonu — input ile aynı genişlik */
-  #ara-btn {
-    width: 100% !important;
-    height: 50px !important;
-    font-size: 18px !important;
-    border-radius: 8px;
-    margin-top: 12px;
-  }
-
-  /* Öneri kutusu — 2. fotoğraftaki görünüm */
+  /* Öneri kutusu: 2. görseldeki gibi, inputun altını tamamen kaplasın */
   .suggestion-box {
-    width: 100% !important;
-    max-width: 92% !important;
-    left: 50% !important;
-    transform: translateX(-50%);
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Yeşil "Kutuyu Göster" butonu: input ile aynı genişlikte, altında */
+  #bulBtn {
+    display: block;
+    margin: 10px auto 0;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 0 0 4px 4px; /* istersen 4px bırakabilirsin */
+    font-size: 16px;
+    padding: 12px 10px;
   }
 }
