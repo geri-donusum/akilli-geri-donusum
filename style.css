@@ -57,7 +57,7 @@ h1 {
   border: none;
   background: none;
   color: #999;
-  font-size: 12px;
+  font-size: 10px;
   cursor: pointer;
   padding: 0;
 }
@@ -177,9 +177,9 @@ h1 {
 
   /* X işareti inputun İÇİNDE, sağ tarafa otursun */
   .temizle-btn {
-    right: 12px;              /* artık sabit küçük boşluk */
+    right: 14px;              /* artık sabit küçük boşluk */
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-58%);
   }
 
   /* Öneri kutusu: 2. görseldeki gibi, inputun altını tamamen kaplasın */
