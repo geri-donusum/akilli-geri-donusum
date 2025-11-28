@@ -151,52 +151,61 @@ h1 {
   line-height: 1;
 }
 
-/* -------------------------------------------------- */
-/* 📱 MOBİL DÜZEN – TÜM TELEFONLARDA 1. VE 2. GÖRSEL GİBİ */
-/* -------------------------------------------------- */
-
+/* 📱 SADECE MOBİL DÜZEN (masaüstüne hiç dokunmuyor) */
 @media (max-width: 768px) {
 
   body {
-    margin: 16px;
+    margin: 24px 12px 40px;
   }
 
-  /* Arama alanı ortalı, genişliği ekranla birlikte esnesin */
+  /* Arama alanı: sayfa genişliğine uyum sağlasın */
   .arama-alani {
-    display: block;
-    max-width: 480px;
     width: 100%;
-    margin: 0 auto 12px;
+    max-width: 480px;
   }
 
-  /* Input tam genişlik */
+  /* Arama kutusu: tam genişlik, içinde X için yer */
   .arama-alani input {
     width: 100%;
-    border-radius: 4px;
+    font-size: 16px;
+    padding-right: 36px;   /* X işareti için boşluk */
   }
 
-  /* X işareti inputun İÇİNDE, sağ tarafa otursun */
+  /* X işareti: kutunun İÇİNDE, sağda ve büyük */
   .temizle-btn {
-    right: 12px;              /* artık sabit küçük boşluk */
+    position: absolute;
+    right: 14px;
     top: 50%;
     transform: translateY(-50%);
+    border: none;
+    background: none;
+    color: #999;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
   }
 
-  /* Öneri kutusu: 2. görseldeki gibi, inputun altını tamamen kaplasın */
+  /* Yazı varsa X görünsün (eski kuralın mobilde devamı) */
+  .arama-alani input:not(:placeholder-shown) + .temizle-btn {
+    opacity: 1;
+  }
+
+  /* Kutuyu Göster: tam genişlikte yeşil bar (1. fotoğraftaki gibi) */
+  .arama-alani > button:not(.temizle-btn) {
+    display: block;
+    width: 100%;
+    margin: 10px 0 0;
+    border-radius: 0;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #4caf50;
+  }
+
+  /* Öneri kutusu: input kadar geniş, 2. fotoğraftaki gibi */
   .suggestion-box {
     width: 100%;
-    max-width: 100%;
-  }
-
-  /* Yeşil "Kutuyu Göster" butonu: input ile aynı genişlikte, altında */
-  #bulBtn {
-    display: block;
-    margin: 10px auto 0;
-    width: 100%;
     max-width: 480px;
-    border-radius: 0 0 4px 4px; /* istersen 4px bırakabilirsin */
-    font-size: 16px;
-    padding: 12px 10px;
+    left: 0;
   }
 }
-
