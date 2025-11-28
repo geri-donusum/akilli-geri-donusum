@@ -179,7 +179,7 @@ h1 {
   .temizle-btn {
     right: 14px;              /* artık sabit küçük boşluk */
     top: 50%;
-    transform: translateY(-58%);
+    transform: translateY(-75%);
   }
 
   /* Öneri kutusu: 2. görseldeki gibi, inputun altını tamamen kaplasın */
@@ -199,3 +199,4 @@ h1 {
     padding: 12px 10px;
   }
 }
+
