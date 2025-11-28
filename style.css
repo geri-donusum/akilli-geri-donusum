@@ -174,9 +174,9 @@ h1 {
   /* X işareti: kutunun İÇİNDE, sağda ve büyük */
   .temizle-btn {
     position: absolute;
-    right: 85px;
-    top: 50%;
-    transform: translateY(-100%);
+    right: 4px;
+    top: 46%;
+    transform: translateY(-50%);
     border: none;
     background: none;
     color: #999;
@@ -209,5 +209,6 @@ h1 {
     left: 0;
   }
 }
+
 
 
