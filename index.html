@@ -7,30 +7,27 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Uygulama Başlığı -->
-  <h1 id="appTitle">
-    ♻️ Akıllı Geri Dönüşüm
-  </h1>
+  <h1 id="appTitle">♻️ Akıllı Geri Dönüşüm</h1>
 
-  <!-- Arama Alanı -->
   <div class="arama-alani">
-    <input
-      type="text"
-      id="inputAtik"
-      placeholder="Atık adını yaz..."
-      autocomplete="off"
-    />
-    <!-- X butonu -->
-    <button class="temizle-btn" type="button" onclick="temizleInput()">✕</button>
+    <!-- 🔹 INPUT + X AYNI KUTUDA -->
+    <div class="input-kapsayici">
+      <input
+        type="text"
+        id="inputAtik"
+        placeholder="Atık adını yaz..."
+        autocomplete="off"
+      />
+      <button type="button" class="temizle-btn" onclick="temizleInput()">×</button>
+    </div>
 
-    <!-- Masaüstünde inputun sağındaki buton, mobilde inputun altında tam genişlik -->
+    <!-- 🔹 Kutuyu Göster butonu -->
     <button id="bulBtn" type="button" onclick="bul()">Kutuyu Göster</button>
 
-    <!-- Öneri Kutusu -->
+    <!-- 🔹 Öneriler -->
     <div class="suggestion-box"></div>
   </div>
 
-  <!-- Sonuç Alanı -->
   <div id="sonuc"></div>
 
   <script src="script.js"></script>
