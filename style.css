@@ -191,7 +191,7 @@ h1 {
     right: 10px;
     top: 80%;
     transform: translateY(-50%);
-    font-size: 20px;
+    font-size: 40px;
     color: #999;
   }
 
@@ -212,4 +212,5 @@ h1 {
     left: 0;
   }
 }
+
 
