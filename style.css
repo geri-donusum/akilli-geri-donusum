@@ -190,7 +190,7 @@ h1 {
   .temizle-btn {
     right: 10px;
     top: 40%;
-    transform: translateY(-50%);
+    transform: translateY(-30%);
     font-size: 40px;
     color: #999;
   }
@@ -212,6 +212,7 @@ h1 {
     left: 0;
   }
 }
+
 
 
 
