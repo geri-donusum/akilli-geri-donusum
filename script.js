@@ -1,4 +1,4 @@
-// script.js — Tam ve güncel hâl
+// script.js — Tam ve güncel hâl (mobilde başlığa dokunma ile yenileme eklendi)
 
 // -----------------------------
 // ♻️ Atık veritabanı (yaklaşık 45 örnek)
@@ -10,7 +10,7 @@ const atiklar = [
   { ad: "kitap", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Eski kitaplar kâğıt toplama noktalarına verilebilir." },
   { ad: "karton kutu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Karton kutular katlanıp mavi kutuya atılmalıdır." },
   { ad: "süt kutusu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Süt kutuları iyice çalkalanıp temizlenmeli ve mavi kutuya atılmalı." },
-  { ad: "zarf", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Zarflar ve evrak kağıtları kağıt atık olarak ayrılmalıdır." },
+  { ad: "zarf", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Zarflar ve evrak kağıtları kağıt atığı olarak ayrılmalıdır." },
 
   // PLASTİK
   { ad: "plastik şişe", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Pet şişeler temizlenip sarı kutuya atılmalıdır." },
@@ -59,7 +59,6 @@ const atiklar = [
   { ad: "vida", renk: "sarı", baslik: "METAL ATIK", bilgi: "Küçük metal parçalar metal geri dönüşümüne uygundur." },
   { ad: "bira kutusu", renk: "sarı", baslik: "METAL ATIK", bilgi: "Alüminyum içecek kutuları geri dönüşüme uygundur." },
   { ad: "deterjan şişesi", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Deterjan şişeleri temizlenip sarıya atılmalıdır." },
-  { ad: "pipet plastik", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Tek kullanımlık pipetler plastik atığa gider." },
   { ad: "kahve fincanı karton", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Kartondan yapılmış ambalajlar kâğıt atığıdır." },
   { ad: "ambalaj kartonu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Ambalaj kartonları kırıştırılıp mavi kutuya atılabilir." },
   { ad: "toy kutusu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Oyuncak ambalajları kâğıt grubuna girer." }
@@ -84,10 +83,34 @@ function showResultWithFade(html) {
 }
 
 // -----------------------------
-// Başlık tıklanırsa sayfayı yenile
+// Başlık tıklanırsa sayfayı yenile (desktop + mobile touch destekli)
 // -----------------------------
+function reloadPageHandler(e) {
+  // Eğer touchmove olduysa (kaydırma), yenileme yapma
+  if (e.type === "touchend" && reloadPageHandler._touchMoved) {
+    reloadPageHandler._touchMoved = false;
+    return;
+  }
+  location.reload();
+}
+reloadPageHandler._touchMoved = false;
+
 if (appTitle) {
-  appTitle.addEventListener("click", () => location.reload());
+  // click her zaman çalışır (masaüstü + bazı mobil tarayıcılarda)
+  appTitle.addEventListener("click", reloadPageHandler);
+
+  // dokunma için güvenli destek: touchstart/touchmove/touchend
+  appTitle.addEventListener("touchstart", () => { reloadPageHandler._touchMoved = false; }, { passive: true });
+  appTitle.addEventListener("touchmove", () => { reloadPageHandler._touchMoved = true; }, { passive: true });
+  appTitle.addEventListener("touchend", reloadPageHandler);
+
+  // pointerup ek desteği (bazı tarayıcılar)
+  appTitle.addEventListener("pointerup", (ev) => {
+    // yalnızca birincil pointer (parmak/sol tık) için
+    if (typeof ev.isPrimary === "boolean" ? ev.isPrimary : true) {
+      reloadPageHandler(ev);
+    }
+  });
 }
 
 // -----------------------------
@@ -96,6 +119,7 @@ if (appTitle) {
 function temizleInput() {
   input.value = "";
   suggestionBox.innerHTML = "";
+  suggestionBox.style.display = "none";
   sonucAlani.innerHTML = "";
   input.focus();
   if (temizleBtn) temizleBtn.style.opacity = 0;
@@ -214,63 +238,74 @@ function escapeHtml(str) {
 // -----------------------------
 let aktifIndex = -1;
 
-input.addEventListener("input", () => {
-  const q = (input.value || "").toLowerCase().trim();
-  suggestionBox.innerHTML = "";
-  aktifIndex = -1;
-  if (!q) return;
-
-  // basit contains araması
-  const eslesen = atiklar.filter(a => a.ad.includes(q)).slice(0, 10);
-  if (!eslesen.length) return;
-
-  // göster
-  suggestionBox.style.display = "block";
-  eslesen.forEach(item => {
-    const el = document.createElement("div");
-    el.className = "suggestion-item";
-    el.textContent = item.ad;
-    el.addEventListener("click", () => {
-      input.value = item.ad;
-      suggestionBox.innerHTML = "";
-      bul();
-    });
-    suggestionBox.appendChild(el);
-  });
-});
-
-// klavye ile ok tuşları + Enter
-input.addEventListener("keydown", e => {
-  const items = Array.from(document.querySelectorAll(".suggestion-item"));
-  if (!items.length) {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      bul();
-    }
-    return;
-  }
-
-  if (e.key === "ArrowDown") {
-    e.preventDefault();
-    aktifIndex = (aktifIndex + 1) % items.length;
-    guncelleSecim(items);
-  } else if (e.key === "ArrowUp") {
-    e.preventDefault();
-    aktifIndex = (aktifIndex - 1 + items.length) % items.length;
-    guncelleSecim(items);
-  } else if (e.key === "Enter") {
-    e.preventDefault();
-    if (aktifIndex >= 0 && items[aktifIndex]) {
-      input.value = items[aktifIndex].textContent;
-      suggestionBox.innerHTML = "";
-      bul();
-    } else {
-      bul();
-    }
-  } else if (e.key === "Escape") {
+if (input) {
+  input.addEventListener("input", () => {
+    const q = (input.value || "").toLowerCase().trim();
     suggestionBox.innerHTML = "";
-  }
-});
+    aktifIndex = -1;
+    if (!q) {
+      suggestionBox.style.display = "none";
+      return;
+    }
+
+    // basit contains araması
+    const eslesen = atiklar.filter(a => a.ad.includes(q)).slice(0, 10);
+    if (!eslesen.length) {
+      suggestionBox.style.display = "none";
+      return;
+    }
+
+    // göster
+    suggestionBox.style.display = "block";
+    eslesen.forEach(item => {
+      const el = document.createElement("div");
+      el.className = "suggestion-item";
+      el.textContent = item.ad;
+      el.addEventListener("click", () => {
+        input.value = item.ad;
+        suggestionBox.innerHTML = "";
+        suggestionBox.style.display = "none";
+        bul();
+      });
+      suggestionBox.appendChild(el);
+    });
+  });
+
+  // klavye ile ok tuşları + Enter
+  input.addEventListener("keydown", e => {
+    const items = Array.from(document.querySelectorAll(".suggestion-item"));
+    if (!items.length) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        bul();
+      }
+      return;
+    }
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      aktifIndex = (aktifIndex + 1) % items.length;
+      guncelleSecim(items);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      aktifIndex = (aktifIndex - 1 + items.length) % items.length;
+      guncelleSecim(items);
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (aktifIndex >= 0 && items[aktifIndex]) {
+        input.value = items[aktifIndex].textContent;
+        suggestionBox.innerHTML = "";
+        suggestionBox.style.display = "none";
+        bul();
+      } else {
+        bul();
+      }
+    } else if (e.key === "Escape") {
+      suggestionBox.innerHTML = "";
+      suggestionBox.style.display = "none";
+    }
+  });
+}
 
 function guncelleSecim(items) {
   items.forEach((el, i) => {
@@ -278,7 +313,6 @@ function guncelleSecim(items) {
       el.classList.add("active");
       el.style.background = "#e6f5ff";
       el.style.fontWeight = "700";
-      // scroll into view if needed
       el.scrollIntoView({ block: "nearest" });
     } else {
       el.classList.remove("active");
@@ -288,7 +322,7 @@ function guncelleSecim(items) {
   });
 }
 
-// tıklama dışında sayfanın herhangi bir yerine tıklayınca önerileri kapat
+// tıklama dışında sayfanın herhangi bir yere tıklayınca önerileri kapat
 document.addEventListener("click", (e) => {
   if (!e.target.closest(".arama-alani") && !e.target.closest(".suggestion-box")) {
     suggestionBox.innerHTML = "";
@@ -297,14 +331,16 @@ document.addEventListener("click", (e) => {
 });
 
 // -----------------------------
-// Enter tuşu ile arama (input içinde)
+// Enter tuşu ile arama (input içinde) — yedek
 // -----------------------------
-input.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    bul();
-  }
-});
+if (input) {
+  input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      bul();
+    }
+  });
+}
 
 // -----------------------------
 // Temizle buton olay atama (varsa)
@@ -321,4 +357,4 @@ if (bulBtn) {
 // -----------------------------
 // Başlangıç - temizle görünümü kontrolü
 // -----------------------------
-if (temizleBtn) temizleBtn.style.opacity = input.value ? 1 : 0;
+if (temizleBtn) temizleBtn.style.opacity = input && input.value ? 1 : 0;
