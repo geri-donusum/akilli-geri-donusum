@@ -189,7 +189,7 @@ h1 {
   /* ❌ X işareti – KUTUNUN İÇİNDE, her telefonda ortalı */
   .temizle-btn {
     right: 10px;
-    top: 30%;
+    top: 40%;
     transform: translateY(-50%);
     font-size: 40px;
     color: #999;
