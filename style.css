@@ -21,18 +21,26 @@ h1 {
   text-align: left;
 }
 
-/* Arama inputu – masaüstü */
-.arama-alani input {
-  padding: 8px 36px 8px 10px; /* sağda X için boşluk */
+/* 🔹 Input + X aynı kutuda */
+.input-kapsayici {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+}
+
+/* Arama inputu (masaüstü) */
+.input-kapsayici input {
+  padding: 8px 32px 8px 10px; /* sağda X için boşluk */
   font-size: 16px;
   border-radius: 4px 0 0 4px;
   border: 1px solid #ccc;
-  width: 220px; /* MASAÜSTÜ DEĞİŞMEDİ */
+  width: 220px; /* MASAÜSTÜ GENİŞLİK */
   box-sizing: border-box;
 }
 
-/* Genel buton stilleri */
+/* Genel buton stilleri (masaüstü) */
 #bulBtn {
+  display: inline-block;
   padding: 8px 12px;
   background-color: #4caf50;
   color: white;
@@ -41,24 +49,26 @@ h1 {
   cursor: pointer;
   font-weight: bold;
   font-size: 15px;
+  vertical-align: middle;
 }
 
 #bulBtn:hover {
   background-color: #45a049;
 }
 
-/* ❌ Temizle (X) – masaüstü */
+/* ❌ Temizle (X) – input’un İÇİNDE */
 .temizle-btn {
   position: absolute;
+  right: 8px;
   top: 50%;
   transform: translateY(-50%);
-  right: 145px;
   border: none;
   background: none;
   color: #999;
-  font-size: 16px; /* 🔥 MASAÜSTÜ 12px → 16px */
+  font-size: 14px;
   cursor: pointer;
   padding: 0;
+  line-height: 1;
 }
 
 .temizle-btn:hover {
@@ -114,4 +124,91 @@ h1 {
 }
 
 .kutu-icon.mavi { background: #007bff; }
-.kutu-icon.kırmızı { background
+.kutu-icon.kırmızı { background: #ff4c4c; }
+.kutu-icon.yeşil { background: #28a745; }
+.kutu-icon.sarı { background: #ffd43b; }
+.kutu-icon.gri { background: #999; }
+
+.baslik-yazi {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.atik-cumle {
+  font-size: 18px;
+  color: #000;
+  margin-bottom: 10px;
+}
+
+.bilgi-metni {
+  font-size: 15px;
+  color: #444;
+  background-color: transparent;
+  padding: 6px 10px;
+  border-left: 4px solid #4caf50;
+  border-radius: 4px;
+  display: inline-block;
+  text-align: left;
+  max-width: 420px;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+.uyari-ikon {
+  font-size: 28px;
+  color: #ff4c4c;
+  line-height: 1;
+}
+
+/* 📱 SADECE MOBİL DÜZEN (masaüstüne hiç dokunmuyor) */
+@media (max-width: 768px) {
+
+  body {
+    margin: 24px 12px 40px;
+  }
+
+  /* Arama alanı: sayfa genişliğine uyum sağlasın */
+  .arama-alani {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  /* Input kutusu: tam genişlik + X için yer */
+  .input-kapsayici {
+    display: block;
+    width: 100%;
+  }
+
+  .input-kapsayici input {
+    width: 100%;
+    font-size: 16px;
+    padding-right: 40px;   /* X için alan */
+    border-radius: 4px;
+  }
+
+  /* ❌ X işareti – KUTUNUN İÇİNDE, her telefonda ortalı */
+  .temizle-btn {
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #999;
+  }
+
+  /* Kutuyu Göster: tam genişlikte yeşil bar (1. görseldeki gibi) */
+  #bulBtn {
+    display: block;
+    width: 100%;
+    margin: 10px 0 0;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  /* Öneri kutusu: input ile aynı genişlik */
+  .suggestion-box {
+    width: 100%;
+    max-width: 480px;
+    left: 0;
+  }
+}
