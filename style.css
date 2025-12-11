@@ -162,3 +162,41 @@ h1 {
     font-size: 17px;
   }
 }
+
+/* ------- ZORLAYICI EK (CSS-ONLY denenecekse aşağıyı kaldırma) ------- */
+/* Bu kısım mobilde kesin sırayı zorlar; eğer JS ile taşıma kullanacaksan yine sorun çıkarmaz. */
+@media (max-width: 768px) {
+
+  .arama-alani {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  .input-kapsayici { order: 1 !important; width: 100% !important; display: block !important; }
+  .suggestion-box {
+    order: 2 !important;
+    position: relative !important;
+    width: 100% !important;
+    margin: 0 !important;
+    margin-top: 4px !important;
+    margin-bottom: 4px !important;
+    max-height: 320px !important;
+    box-sizing: border-box !important;
+    transform: none !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+  }
+  #bulBtn { order: 3 !important; display: block !important; width: 100% !important; }
+
+  .suggestion-box, .suggestion-box * {
+    position: relative !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
