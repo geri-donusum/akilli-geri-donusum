@@ -57,14 +57,14 @@ const atiklar = [
   { ad: "çatal kaşık", renk: "gri", baslik: "METAL ATIK", bilgi: "Eskimiş metal mutfak gereçleri." },
 
   // --- 🟤 KAHVERENGİ KUTU (Organik / Kompost) ---
-  { ad: "meyve kabuğu", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Elma, muz, mandalina, portakal kabukları." },
-  { ad: "sebze artığı", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Patates soyukları, marul yaprakları, domates sapları." },
-  { ad: "çay posası", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Demlikteki çay posaları (poşet çaysa kağıdını ayırın)." },
-  { ad: "kahve telvesi", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Filtre kahve veya Türk kahvesi atıkları." },
-  { ad: "yumurta kabuğu", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Yumurta kabukları toprağa mineral verir." },
-  { ad: "ceviz kabuğu", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Kuruyemiş kabukları (tuzsuz ise daha iyidir)." },
-  { ad: "yaprak", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Okul bahçesindeki kurumuş yaprak ve dal parçaları." },
-  { ad: "çekirdek kabuğu", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Ayçekirdeği vb. kabuklar (yere değil kutuya!)." },
+  { ad: "meyve kabuğu", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Vitamin deposudur ve doğal gübreye dönüşür. Üzerindeki plastik etiketleri (barkodları) mutlaka söküp çöpe, kabuğu ise buraya atınız." },
+  { ad: "sebze artığı", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Sadece yağsız, soslanmamış ve pişmemiş sebze artıkları kompost yapılabilir. Yağlı yemek artıkları süreci bozar." },
+  { ad: "çay posası", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Toprak için çok besleyicidir. Eğer poşet çay ise; plastik içeren poşetini, zımba telini ve ipini ayırıp sadece çayı dökünüz." },
+  { ad: "kahve telvesi", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Toprağı azotla besler ve havalandırır. Kağıt filtre kullanıyorsanız, filtreyle birlikte (doğalsa) atabilirsiniz." },
+  { ad: "yumurta kabuğu", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Toprak için saf kalsiyum kaynağıdır. Doğada daha hızlı çözünmesi ve toprağa karışması için elinizle ufalayarak atınız." },
+  { ad: "ceviz kabuğu", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Tuz, bitkileri öldürür; bu yüzden sadece tuzsuz kabuklar atılmalıdır. Sert yapısıyla toprağın hava almasını sağlar." },
+  { ad: "yaprak", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Karbon bakımından zengindir ve kompost dengesini sağlar. İçine plastik veya metal çöp karıştırmadan saf halde atınız." },
+  { ad: "çekirdek kabuğu", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Tuzlu çekirdek kabukları toprağı çoraklaştırır, organik kutuya ATILMAZ (Siyaha atın). Tuzsuz ise gübreye dönüşür." },
 
   // --- ⚫ SİYAH KUTU (Geri Dönüşmeyen / Diğer Atık) ---
   { ad: "ıslak mendil", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Plastik lif içerir ve kirlidir. Asla tuvalete veya geri dönüşüme atmayın." },
@@ -95,9 +95,9 @@ const atiklar = [
 
   // --- 🔴 KIRMIZI KUTU (Atık Pil & Tehlikeli) ---
   { ad: "pil", renk: "kırmızı", baslik: "ATIK PİL", bilgi: "Kalem piller toprağı zehirler. Okul veya marketteki kırmızı kutuya atın." },
-  { ad: "kalem pil", renk: "kırmızı", baslik: "ATIK PİL", bilgi: "AA ve AAA piller." },
-  { ad: "düğme pil", renk: "kırmızı", baslik: "ATIK PİL", bilgi: "Saat ve tartı pilleri." },
-  { ad: "batarya", renk: "kırmızı", baslik: "E-ATIK", bilgi: "Şişmiş veya bitmiş telefon bataryaları." },
+  { ad: "kalem pil", renk: "kirmizi", baslik: "ATIK PİL", bilgi: "İçerdiği ağır metaller toprağa sızarsa yeraltı sularını zehirler. Asla evsel çöpe atmayın; sızıntıyı önlemek için uçlarını bantlayarak atık pil kutusuna atınız." },
+  { ad: "düğme pil", renk: "kirmizi", baslik: "ATIK PİL", bilgi: "Cıva veya lityum gibi çok toksik maddeler içerir. Yutulması hayati tehlike yaratır; çocuklardan uzak tutup güvenli pil kutularına atınız." },
+  { ad: "batarya", renk: "kirmizi", baslik: "E-ATIK", bilgi: "Lityum iyon içerir; ezilirse veya delinirse aniden patlama ve yangın çıkarma riski taşır. Şişmiş bataryaları bantlayıp, diğer pillerden ayrı bir poşette teslim ediniz." },
   { ad: "powerbank", renk: "kırmızı", baslik: "E-ATIK", bilgi: "Taşınabilir şarj cihazları elektronik atık noktalarına verilmelidir." },
   { ad: "elektronik", renk: "kırmızı", baslik: "E-ATIK", bilgi: "Eski kulaklık, şarj kablosu, fare (mouse) gibi e-atıklar." },
   { ad: "toner", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Yazıcı tonerleri ve kartuşları özel toplama kutularına." },
@@ -384,6 +384,7 @@ if (bulBtn) {
 }
 
 if (temizleBtn) temizleBtn.style.opacity = input && input.value ? 1 : 0;
+
 
 
 
