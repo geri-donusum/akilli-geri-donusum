@@ -82,6 +82,10 @@ const atiklar = [
   { ad: "ısıya dayanıklı cam", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Borcam vb. ısı camları normal camla karışmamalıdır." },
   { ad: "alışveriş fişi", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Termal kağıtlar (fiş/fatura) kimyasal içerir, geri dönüşmez." },
   { ad: "yağlı kağıt", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Fırın pişirme kağıtları veya yağlı hamburger kağıtları." },
+  { ad: "kurşun kalem", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Boyalı tahta ve grafit içerdiği için geri dönüşüme uygun değildir. Siyah kutuya atılır." },
+  { ad: "tükenmez kalem", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Plastik, metal yay ve mürekkep karışımıdır. Ayrıştırılamadığı için çöpe atılır." },
+  { ad: "keçeli kalem", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Mürekkep haznesi içerdiği için plastik geri dönüşüme atılmaz." },
+  { ad: "uçlu kalem", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Bozulmuşsa, karmaşık mekanizması nedeniyle çöpe (siyah kutu) atılmalıdır." },
 
   // --- 🟣 MOR KUTU (Ekmek) ---
   { ad: "bayat ekmek", renk: "mor", baslik: "EKMEK ATIĞI", bilgi: "Ekmekler poşetsiz olarak mor kutuya atılmalıdır." },
@@ -380,3 +384,4 @@ if (bulBtn) {
 }
 
 if (temizleBtn) temizleBtn.style.opacity = input && input.value ? 1 : 0;
+
