@@ -6,8 +6,8 @@
 // -----------------------------
 const atiklar = [
   // --- 🟦 MAVİ KUTU (Kağıt & Karton) ---
-  { ad: "okul defteri", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Eski defterler (telleri çıkarılarak) ve kitaplar mavi kutuya atılır." },
-  { ad: "sınav kağıdı", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Kullanılmış test kağıtları ve A4 kağıtlar temizse geri dönüştürülür." },
+  { ad: "defter", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Eski defterler (telleri çıkarılarak) ve kitaplar mavi kutuya atılır." },
+  { ad: "kağıt", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Kullanılmış test kağıtları ve A4 kağıtlar temizse geri dönüştürülür." },
   { ad: "karton koli", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Koli bantlarını söküp, kutuyu iyice ezerek (hacim kaplamaması için) atınız." },
   { ad: "gazete", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Gazeteler ve el ilanları mavi kutuya uygundur." },
   { ad: "dergi", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Parlak kapaklı dergiler ve broşürler kağıt geri dönüşüme atılır." },
@@ -51,7 +51,7 @@ const atiklar = [
   { ad: "cips paketi", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Metalize plastik içerdiği için geri dönüşümü zordur, genelde çöpe atılır." },
   { ad: "sakız", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Sakızlar asla yere atılmamalı, kağıda sarılıp siyah kutuya atılmalıdır." },
   { ad: "kalem tıraş çöpü", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Okullardaki kalem açacağı artıkları siyah kutuya gider." },
-  { ad: "kırık ayna", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Ayna ve porselenler cam kumbarasına (Yeşil) ATILMAZ." },
+  { ad: "ayna", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Ayna ve porselenler cam kumbarasına (Yeşil) ATILMAZ." },
 
   // --- 🟣 MOR KUTU (Ekmek) ---
   { ad: "bayat ekmek", renk: "mor", baslik: "EKMEK ATIĞI", bilgi: "Ekmekler poşetsiz olarak mor kutuya atılmalıdır." },
@@ -342,3 +342,4 @@ if (bulBtn) {
 }
 
 if (temizleBtn) temizleBtn.style.opacity = input && input.value ? 1 : 0;
+
