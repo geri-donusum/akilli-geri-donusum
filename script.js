@@ -1,161 +1,293 @@
-// script.js — ESKİ (sade, çalışır) HAL (arama, öneri, klavye, fuzzy match)
-// Yükle: kaydet -> GitHub Pages -> cache temizle -> test et
+// script.js — Tam ve güncel hâl (mobilde başlığa dokunma ile yenileme eklendi)
 
-// ♻️ Atık veritabanı (~45 öğe)
+// -----------------------------
+// ♻️ Atık veritabanı (yaklaşık 45 örnek)
+// -----------------------------
 const atiklar = [
-  // Kağıt
-  { ad: "gazete", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Gazeteler geri dönüşüme uygun şekilde ayrılmalıdır." },
-  { ad: "dergi", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Dergiler poşetlere konmadan katlanıp atılmalı." },
-  { ad: "kitap", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Eski kitaplar bağışlanabilir veya mavi kutuya atılabilir." },
-  { ad: "broşür", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Broşürler kağıt akışına uygundur." },
-  { ad: "fotokopi kağıdı", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Kullanılmış fotokopi kağıtlarını mavi kutuya atın." },
-  { ad: "karton kutu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Kartonlar katlanarak atılmalıdır." },
-  { ad: "süt kutusu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "İçleri temizlenip mavi kutuya atılmalıdır." },
-  { ad: "defter", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Eski defterler kağıt atığıdır." },
-  { ad: "zarf", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Zarflar ve kağıt evraklar mavi kutuda toplanır." },
-  { ad: "kartvizit", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Kartvizitler de kağıt atığıdır." },
+  // KAĞIT
+  { ad: "gazete", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Gazeteler ve broşürler geri dönüşüme verilebilir." },
+  { ad: "dergi", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Dergiler karton ve kağıt olarak ayrılmalıdır." },
+  { ad: "kitap", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Eski kitaplar kâğıt toplama noktalarına verilebilir." },
+  { ad: "karton kutu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Karton kutular katlanıp mavi kutuya atılmalıdır." },
+  { ad: "süt kutusu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Süt kutuları iyice çalkalanıp temizlenmeli ve mavi kutuya atılmalı." },
+  { ad: "zarf", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Zarflar ve evrak kağıtları kağıt atığı olarak ayrılmalıdır." },
 
-  // Plastik
-  { ad: "plastik şişe", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Pet şişeler boş olarak ve sıkıştırılmış şekilde sarı kutuya." },
-  { ad: "naylon poşet", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Poşetler ayrı toplanır; mümkünse yeniden kullanım." },
-  { ad: "plastik kap", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Plastik gıda kapları temizlendikten sonra atılmalı." },
-  { ad: "şampuan şişesi", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Şampuan ve kozmetik şişeleri temizlenip atılmalıdır." },
-  { ad: "yoğurt kabı", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Kapların içi temizlenmelidir." },
-  { ad: "plastik tabak", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Tek kullanımlık plastik tabaklar sarı kutuya." },
-  { ad: "plastik çatal", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Plastik çatal ve bıçaklar sarı kutuda toplanır." },
-  { ad: "pipet", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Plastik pipetler geri dönüşüme uygundur." },
-  { ad: "deterjan şişesi", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Boş deterjan şişeleri geri dönüşüm." },
+  // PLASTİK
+  { ad: "plastik şişe", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Pet şişeler temizlenip sarı kutuya atılmalıdır." },
+  { ad: "naylon poşet", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Poşetler sarı kutuya veya ilgili toplama noktalarına verilmelidir." },
+  { ad: "yoğurt kabı", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Yoğurt kapları iyice temizlenip sarı kutuya atılabilir." },
+  { ad: "şampuan şişesi", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Şampuan şişeleri boş ve temiz olarak sarıya atılmalıdır." },
+  { ad: "plastik kap", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Gıda kapları temizlenip sarı kutuya atılabilir." },
+  { ad: "plastik tabak", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Tek kullanımlık plastik tabaklar sarı kutuya atılmalıdır." },
 
-  // Cam
-  { ad: "cam şişe", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Cam şişeler kırılmamaya dikkat edilerek yeşil kutuya." },
-  { ad: "cam kavanoz", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Cam kavanozlar temizlenip atılmalıdır." },
-  { ad: "cam bardak", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Kırık camlar dikkatle paketlenmelidir." },
-  { ad: "kolonya şişesi", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Boş kolonya şişeleri cam grubuna girer." },
-  { ad: "reçel kavanozu", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Kavanozlar temizlenerek atılmalıdır." },
+  // CAM
+  { ad: "cam şişe", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Cam şişeler kırılmadan yeşil kutuya atılmalıdır." },
+  { ad: "cam kavanoz", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Cam kavanozlar temizlenip yeşil kutuya verilebilir." },
+  { ad: "cam bardak", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Cam bardaklar uygun şekilde ayrılmalıdır." },
+  { ad: "kolonya şişesi", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Boş kolonya şişeleri cam olarak toplanmalıdır." },
 
-  // Metal
-  { ad: "teneke kutu", renk: "sarı", baslik: "METAL ATIK", bilgi: "İçecek tenekeleri iyice sıkıştırılarak atılmalı." },
-  { ad: "konserve kutusu", renk: "sarı", baslik: "METAL ATIK", bilgi: "Konserve kutuları metal grubuna girer." },
-  { ad: "alüminyum folyo", renk: "sarı", baslik: "METAL ATIK", bilgi: "Temiz folyo sarı kutuya atılabilir." },
-  { ad: "vida", renk: "sarı", baslik: "METAL ATIK", bilgi: "Küçük metal parçalar uygun şekilde toplanır." },
+  // TEHLİKELİ
+  { ad: "pil", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Piller özel toplama kutularına verilmelidir." },
+  { ad: "ampul", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Ampuller dikkatle paketlenip tehlikeli atık noktasına verilmeli." },
+  { ad: "ilaç", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Kullanılmamış veya tarihi geçmiş ilaçlar eczanelerde veya tehlikeli atık noktasında toplanır." },
+  { ad: "boya kutusu", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Boya ve solvent gibi atıklar tehlikeli atık kategorisindedir." },
 
-  // Organik
-  { ad: "muz kabuğu", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Organik atıklar kompost için uygundur." },
-  { ad: "elma çekirdeği", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Meyve çekirdekleri organik atıktır." },
-  { ad: "yumurta kabuğu", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Yumurta kabukları kompostta değerlendirilebilir." },
-  { ad: "kahve posası", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Kahve posası bitki gübresi olarak kullanılabilir." },
-  { ad: "çay poşeti", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Çay poşetleri organik atığa aittir." },
-  { ad: "ekmek", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Bayat ekmek organik atıktır." },
-  { ad: "sebze kabuğu", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Sebze-meyve kabukları organik atıktır." },
-  { ad: "yemek artığı", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Yemek atıkları komposta uygundur." },
+  // ORGANİK
+  { ad: "muz kabuğu", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Muz kabuğu kompost için uygundur." },
+  { ad: "yemek artığı", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Yemek artıklarını organik atık kutusuna verin." },
+  { ad: "kahve posası", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Kahve posası bahçe için iyi bir kompost malzemesidir." },
 
-  // Tehlikeli / Özel
-  { ad: "pil", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Piller özel toplama noktalarına verilmelidir." },
-  { ad: "batarya", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Bataryalar ayrı biriktirilmelidir." },
-  { ad: "ampul", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Kırılmadan özenle teslim edin." },
-  { ad: "ilaç", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "İlaç atıkları eczanelerde toplanabilir." },
-  { ad: "sprey kutusu", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Basınçlı kutular özel işleme gerektirir." },
-  { ad: "boya kutusu", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Boya artıklarını yetkili noktalara verin." },
+  // METAL
+  { ad: "konserve kutusu", renk: "sarı", baslik: "METAL ATIK", bilgi: "Konserve kutuları temizlenip sarı kutuya atılmalıdır." },
+  { ad: "teneke kutu", renk: "sarı", baslik: "METAL ATIK", bilgi: "Alüminyum kutular geri dönüştürülebilir metaldir." },
 
-  // Ek birkaç yaygın örnek
-  { ad: "pet şişe", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Pet şişeler geri dönüşüme uygundur." },
-  { ad: "süt kutusu karton", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Süt kartonları mavi kutuya atılmalıdır." },
-  { ad: "cam parça", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Kırık cam parçaları dikkatle paketlenmeli." },
-  { ad: "metal kapak", renk: "sarı", baslik: "METAL ATIK", bilgi: "Kapaklar metal grubuna verilebilir." },
-  { ad: "plastik poşet", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Poşetleri mümkün olduğunca azaltın." }
+  // EKSTRA (günlük yaygın atıklar)
+  { ad: "cd kutusu", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "CD kutuları plastik sınıfına girer." },
+  { ad: "pipet", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Plastik pipetler plastik atık kutusuna atılmalıdır." },
+  { ad: "peçete kutusu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Kağıt mendil kutuları kâğıt atığıdır." },
+  { ad: "defter", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Eski defterler kâğıt olarak değerlendirilir." },
+  { ad: "zarf", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Zarflar kâğıt atığına verilebilir." },
+  { ad: "pekmez kabı", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Temiz plastik kaplar sarı kutuya atılabilir." },
+  { ad: "reçel kavanozu", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Cam kavanozlar geri dönüşüme uygundur." },
+  { ad: "tedavi amaçlı ilaç kutusu", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "İlaç kutuları tehlikeli atık kategorisine girebilir." },
+  { ad: "ekmek", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Bayat ekmek organik atık olarak ayrılmalıdır." },
+  { ad: "sebze kabuğu", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Sebze kabukları kompost yapılabilir." },
+  { ad: "alüminyum folyo", renk: "sarı", baslik: "METAL ATIK", bilgi: "Temiz alüminyum folyo geri dönüşüme verilebilir." },
+  { ad: "şeffaf plastik", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Şeffaf plastik ambalajlar sarı kutuya atılmalıdır." },
+  { ad: "kolonya kutusu", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Parfüm ve kolonya cam şişeleridir." },
+  { ad: "çay poşeti", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Kullanılmış çay poşetleri organik atık kutusuna atılmalıdır." },
+  { ad: "vida", renk: "sarı", baslik: "METAL ATIK", bilgi: "Küçük metal parçalar metal geri dönüşümüne uygundur." },
+  { ad: "bira kutusu", renk: "sarı", baslik: "METAL ATIK", bilgi: "Alüminyum içecek kutuları geri dönüşüme uygundur." },
+  { ad: "deterjan şişesi", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Deterjan şişeleri temizlenip sarıya atılmalıdır." },
+  { ad: "kahve fincanı karton", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Kartondan yapılmış ambalajlar kâğıt atığıdır." },
+  { ad: "ambalaj kartonu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Ambalaj kartonları kırıştırılıp mavi kutuya atılabilir." },
+  { ad: "toy kutusu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Oyuncak ambalajları kâğıt grubuna girer." }
 ];
 
-// DOM elemanlarını al
-const input = document.getElementById("inputAtik") || document.getElementById("arama");
-const suggestionBox = document.querySelector(".suggestion-box") || (() => {
-  const el = document.createElement("div");
-  el.className = "suggestion-box";
-  // input parent'ının sonuna ekleme denemesi
-  const parent = (input && input.parentNode) || document.body;
-  parent.appendChild(el);
-  return el;
-})();
+// -----------------------------
+// DOM elementleri
+// -----------------------------
+const input = document.getElementById("inputAtik");
+const suggestionBox = document.querySelector(".suggestion-box");
 const sonucAlani = document.getElementById("sonuc");
 const appTitle = document.getElementById("appTitle");
 const temizleBtn = document.querySelector(".temizle-btn");
-const bulBtn = document.getElementById("bulBtn") || document.querySelector("button[onclick*='bul']");
+const bulBtn = document.getElementById("bulBtn");
 
-// Başlığa tıklayınca sayfa yenilensin (hem masaüstü hem mobil)
-if (appTitle) appTitle.addEventListener("click", () => location.reload());
+// Fade-in için klası ekle/çıkar
+function showResultWithFade(html) {
+  sonucAlani.classList.remove("goster");
+  void sonucAlani.offsetWidth; // reflow ile restart
+  sonucAlani.innerHTML = html;
+  setTimeout(() => sonucAlani.classList.add("goster"), 20);
+}
 
-// Temizle butonu fonksiyonu
+// -----------------------------
+// Başlık tıklanırsa sayfayı yenile (desktop + mobile touch destekli)
+// -----------------------------
+function reloadPageHandler(e) {
+  // Eğer touchmove olduysa (kaydırma), yenileme yapma
+  if (e.type === "touchend" && reloadPageHandler._touchMoved) {
+    reloadPageHandler._touchMoved = false;
+    return;
+  }
+  location.reload();
+}
+reloadPageHandler._touchMoved = false;
+
+if (appTitle) {
+  // click her zaman çalışır (masaüstü + bazı mobil tarayıcılarda)
+  appTitle.addEventListener("click", reloadPageHandler);
+
+  // dokunma için güvenli destek: touchstart/touchmove/touchend
+  appTitle.addEventListener("touchstart", () => { reloadPageHandler._touchMoved = false; }, { passive: true });
+  appTitle.addEventListener("touchmove", () => { reloadPageHandler._touchMoved = true; }, { passive: true });
+  appTitle.addEventListener("touchend", reloadPageHandler);
+
+  // pointerup ek desteği (bazı tarayıcılar)
+  appTitle.addEventListener("pointerup", (ev) => {
+    // yalnızca birincil pointer (parmak/sol tık) için
+    if (typeof ev.isPrimary === "boolean" ? ev.isPrimary : true) {
+      reloadPageHandler(ev);
+    }
+  });
+}
+
+// -----------------------------
+// Temizle (X) davranışı
+// -----------------------------
 function temizleInput() {
-  if (!input) return;
   input.value = "";
   suggestionBox.innerHTML = "";
   suggestionBox.style.display = "none";
-  if (sonucAlani) sonucAlani.innerHTML = "";
+  sonucAlani.innerHTML = "";
   input.focus();
+  if (temizleBtn) temizleBtn.style.opacity = 0;
 }
 
-// Levenshtein (yazım hatası düzeltme)
-function levenshtein(a, b) {
-  const A = a || "";
-  const B = b || "";
-  const dp = Array(A.length + 1).fill(null).map(() => Array(B.length + 1).fill(0));
-  for (let i = 0; i <= A.length; i++) dp[i][0] = i;
-  for (let j = 0; j <= B.length; j++) dp[0][j] = j;
-  for (let i = 1; i <= A.length; i++) {
-    for (let j = 1; j <= B.length; j++) {
-      const cost = A[i - 1] === B[j - 1] ? 0 : 1;
-      dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost);
-    }
-  }
-  return dp[A.length][B.length];
-}
-
-// Önerileri göster
-let aktifIndex = -1;
-function guncelleSecim(items) {
-  items.forEach((el, i) => {
-    el.classList.toggle("active", i === aktifIndex);
-    if (i === aktifIndex) {
-      el.scrollIntoView({ block: "nearest" });
+// input değişimine göre temizle butonunu göster/gizle
+if (input) {
+  input.addEventListener("input", () => {
+    if (temizleBtn) {
+      temizleBtn.style.opacity = input.value ? 1 : 0;
     }
   });
 }
+
+// -----------------------------
+// Levenshtein (yazım düzeltme)
+// -----------------------------
+function levenshtein(a, b) {
+  a = a || "";
+  b = b || "";
+  const dp = Array(a.length + 1)
+    .fill(null)
+    .map(() => Array(b.length + 1).fill(0));
+  for (let i = 0; i <= a.length; i++) dp[i][0] = i;
+  for (let j = 0; j <= b.length; j++) dp[0][j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      dp[i][j] = Math.min(
+        dp[i - 1][j] + 1,
+        dp[i][j - 1] + 1,
+        dp[i - 1][j - 1] + cost
+      );
+    }
+  }
+  return dp[a.length][b.length];
+}
+
+// -----------------------------
+// Arama / gösterme fonksiyonu
+// -----------------------------
+function bul() {
+  const raw = (input.value || "").toLowerCase().trim();
+  suggestionBox.innerHTML = "";
+
+  if (!raw) {
+    // boşsa hiçbir şey yapma
+    return;
+  }
+
+  // tam eşleşme ilk önce
+  let atik = atiklar.find(a => a.ad === raw);
+
+  // eğer tam bulunamadıysa en yakın (Levenshtein) bul
+  if (!atik) {
+    let min = Infinity;
+    let enYakin = null;
+    for (const a of atiklar) {
+      const d = levenshtein(raw, a.ad);
+      if (d < min) {
+        min = d;
+        enYakin = a;
+      }
+    }
+    // eşiğe dikkat: 3 veya daha az yakın kabul edilebilir
+    if (enYakin && min <= 3) {
+      atik = enYakin;
+      // bilgilendirici mesaj ile göster
+      showResultWithFade(`
+        <div class="renk-baslik">
+          <div class="kutu-icon ${atik.renk}"></div>
+          <div class="baslik-yazi">${atik.baslik}</div>
+        </div>
+        <div class="atik-cumle">"${escapeHtml(raw)}" yerine "<b>${atik.ad}</b>" olarak algılandı.</div>
+        <div class="bilgi-metni">💡 ${atik.bilgi}</div>
+      `);
+      return;
+    }
+  }
+
+  if (atik) {
+    // normal gösterim
+    showResultWithFade(`
+      <div class="renk-baslik">
+        <div class="kutu-icon ${atik.renk}"></div>
+        <div class="baslik-yazi">${atik.baslik}</div>
+      </div>
+      <div class="atik-cumle">${atik.ad}, <b style="color:${atik.renk}">${atik.renk}</b> kutuya atılmalıdır.</div>
+      <div class="bilgi-metni">💡 ${atik.bilgi}</div>
+    `);
+  } else {
+    // bulunamadı
+    showResultWithFade(`
+      <div class="renk-baslik">
+        <div class="uyari-ikon">⚠️</div>
+        <div class="baslik-yazi">ATIK BULUNAMADI</div>
+      </div>
+      <div class="atik-cumle">Bu atık listede yer almıyor.</div>
+      <div class="bilgi-metni">💡 Lütfen geçerli bir atık türü giriniz (örnek: cam şişe, pil, süt kutusu).</div>
+    `);
+  }
+}
+
+// küçük yardımcı - HTML kaçış (güvenlik/temizlik)
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+// -----------------------------
+// Öneriler (typeahead) + klavye navigasyonu
+// -----------------------------
+let aktifIndex = -1;
 
 if (input) {
   input.addEventListener("input", () => {
-    const q = input.value.toLowerCase().trim();
+    const q = (input.value || "").toLowerCase().trim();
     suggestionBox.innerHTML = "";
     aktifIndex = -1;
-    if (!q) { suggestionBox.style.display = "none"; return; }
+    if (!q) {
+      suggestionBox.style.display = "none";
+      return;
+    }
 
-    const eslesenler = atiklar.filter(a => a.ad.includes(q)).slice(0, 10);
-    if (!eslesenler.length) { suggestionBox.style.display = "none"; return; }
+    // basit contains araması
+    const eslesen = atiklar.filter(a => a.ad.includes(q)).slice(0, 10);
+    if (!eslesen.length) {
+      suggestionBox.style.display = "none";
+      return;
+    }
 
-    eslesenler.forEach(a => {
-      const item = document.createElement("div");
-      item.className = "suggestion-item";
-      item.textContent = a.ad;
-      item.addEventListener("click", () => {
-        input.value = a.ad;
+    // göster
+    suggestionBox.style.display = "block";
+    eslesen.forEach(item => {
+      const el = document.createElement("div");
+      el.className = "suggestion-item";
+      el.textContent = item.ad;
+      el.addEventListener("click", () => {
+        input.value = item.ad;
         suggestionBox.innerHTML = "";
         suggestionBox.style.display = "none";
-        // otomatik arama istersen buraya bul() çağrısı ekle
+        bul();
       });
-      suggestionBox.appendChild(item);
+      suggestionBox.appendChild(el);
     });
-    suggestionBox.style.display = "block";
   });
 
-  // Klavye ile gezinme ve Enter
-  input.addEventListener("keydown", (e) => {
-    const items = Array.from(suggestionBox.querySelectorAll(".suggestion-item"));
+  // klavye ile ok tuşları + Enter
+  input.addEventListener("keydown", e => {
+    const items = Array.from(document.querySelectorAll(".suggestion-item"));
+    if (!items.length) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        bul();
+      }
+      return;
+    }
+
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      if (!items.length) return;
       aktifIndex = (aktifIndex + 1) % items.length;
       guncelleSecim(items);
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      if (!items.length) return;
       aktifIndex = (aktifIndex - 1 + items.length) % items.length;
       guncelleSecim(items);
     } else if (e.key === "Enter") {
@@ -164,12 +296,9 @@ if (input) {
         input.value = items[aktifIndex].textContent;
         suggestionBox.innerHTML = "";
         suggestionBox.style.display = "none";
-        // çağırılacak gerçek arama fonksiyonu varsa onu tetikle
-        if (typeof window.bul === "function") window.bul();
+        bul();
       } else {
-        // doğrudan arama
-        if (typeof window.bul === "function") window.bul();
-        else bul(); // fallback
+        bul();
       }
     } else if (e.key === "Escape") {
       suggestionBox.innerHTML = "";
@@ -178,88 +307,54 @@ if (input) {
   });
 }
 
-// Arama / bul fonksiyonu
-function bul() {
-  const q = (input && input.value.toLowerCase().trim()) || "";
-  if (!q) return;
-  suggestionBox.innerHTML = "";
-  suggestionBox.style.display = "none";
-
-  // önce tam eşleşme
-  let atik = atiklar.find(a => a.ad === q);
-
-  // yazım hatası var mı bak (levenshtein)
-  if (!atik) {
-    let enYakin = null;
-    let min = Infinity;
-    atiklar.forEach(a => {
-      const d = levenshtein(q, a.ad);
-      if (d < min) { min = d; enYakin = a; }
-    });
-    if (enYakin && min <= 3) {
-      // yakın eşleşme bulundu
-      atik = enYakin;
-      // gösterirken kullanıcıya uyar
-      if (sonucAlani) {
-        sonucAlani.innerHTML = `
-          <div class="renk-baslik">
-            <div class="kutu-icon ${atik.renk}"></div>
-            <div class="baslik-yazi">${atik.baslik}</div>
-          </div>
-          <div class="atik-cumle">"${q}" yerine "<strong>${atik.ad}</strong>" olarak algılandı.</div>
-          <div class="bilgi-metni">💡 ${atik.bilgi}</div>
-        `;
-      }
-      return;
+function guncelleSecim(items) {
+  items.forEach((el, i) => {
+    if (i === aktifIndex) {
+      el.classList.add("active");
+      el.style.background = "#e6f5ff";
+      el.style.fontWeight = "700";
+      el.scrollIntoView({ block: "nearest" });
+    } else {
+      el.classList.remove("active");
+      el.style.background = "";
+      el.style.fontWeight = "";
     }
-  }
-
-  if (atik) {
-    if (sonucAlani) {
-      sonucAlani.innerHTML = `
-        <div class="renk-baslik">
-          <div class="kutu-icon ${atik.renk}"></div>
-          <div class="baslik-yazi">${atik.baslik}</div>
-        </div>
-        <div class="atik-cumle">${atik.ad} kutusuna atılmalıdır.</div>
-        <div class="bilgi-metni">💡 ${atik.bilgi}</div>
-      `;
-    }
-  } else {
-    if (sonucAlani) {
-      sonucAlani.innerHTML = `
-        <div class="renk-baslik">
-          <div class="uyari-ikon">⚠️</div>
-          <div class="baslik-yazi">ATIK BULUNAMADI</div>
-        </div>
-        <div class="atik-cumle">Bu atık listede yer almıyor.</div>
-        <div class="bilgi-metni">💡 Lütfen geçerli bir atık türü giriniz (örnek: cam şişe, pil, süt kutusu).</div>
-      `;
-    }
-  }
-}
-
-// temizle butonu varsa bağla
-if (temizleBtn) {
-  temizleBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    temizleInput();
   });
 }
 
-// "Kutuyu Göster" butonun onclick'ine bağlı çalışılabilir; eğer buton farklı isimdeyse yukarıda bulBtn ile bağlanabilir
-if (bulBtn && !bulBtn.onclick) {
-  bulBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    bul();
-  });
-}
-
-// dış tıklamada önerileri kapat
+// tıklama dışında sayfanın herhangi bir yere tıklayınca önerileri kapat
 document.addEventListener("click", (e) => {
-  const target = e.target;
-  if (!suggestionBox || !input) return;
-  if (target === input || input.contains(target) || suggestionBox.contains(target)) return;
-  suggestionBox.innerHTML = "";
-  suggestionBox.style.display = "none";
+  if (!e.target.closest(".arama-alani") && !e.target.closest(".suggestion-box")) {
+    suggestionBox.innerHTML = "";
+    suggestionBox.style.display = "none";
+  }
 });
+
+// -----------------------------
+// Enter tuşu ile arama (input içinde) — yedek
+// -----------------------------
+if (input) {
+  input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      bul();
+    }
+  });
+}
+
+// -----------------------------
+// Temizle buton olay atama (varsa)
+// -----------------------------
+if (temizleBtn) {
+  temizleBtn.addEventListener("click", temizleInput);
+}
+
+// Bul buton (id bulBtn) varsa click olayını bağla
+if (bulBtn) {
+  bulBtn.addEventListener("click", bul);
+}
+
+// -----------------------------
+// Başlangıç - temizle görünümü kontrolü
+// -----------------------------
+if (temizleBtn) temizleBtn.style.opacity = input && input.value ? 1 : 0;
