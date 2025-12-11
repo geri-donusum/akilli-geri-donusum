@@ -95,9 +95,9 @@ const atiklar = [
 
   // --- 🔴 KIRMIZI KUTU (Atık Pil & Tehlikeli) ---
   { ad: "pil", renk: "kırmızı", baslik: "ATIK PİL", bilgi: "Kalem piller toprağı zehirler. Okul veya marketteki kırmızı kutuya atın." },
-  { ad: "kalem pil", renk: "kirmizi", baslik: "ATIK PİL", bilgi: "İçerdiği ağır metaller toprağa sızarsa yeraltı sularını zehirler. Asla evsel çöpe atmayın; sızıntıyı önlemek için uçlarını bantlayarak atık pil kutusuna atınız." },
-  { ad: "düğme pil", renk: "kirmizi", baslik: "ATIK PİL", bilgi: "Cıva veya lityum gibi çok toksik maddeler içerir. Yutulması hayati tehlike yaratır; çocuklardan uzak tutup güvenli pil kutularına atınız." },
-  { ad: "batarya", renk: "kirmizi", baslik: "E-ATIK", bilgi: "Lityum iyon içerir; ezilirse veya delinirse aniden patlama ve yangın çıkarma riski taşır. Şişmiş bataryaları bantlayıp, diğer pillerden ayrı bir poşette teslim ediniz." },
+  { ad: "kalem pil", renk: "kırmızı", baslik: "ATIK PİL", bilgi: "İçerdiği ağır metaller toprağa sızarsa yeraltı sularını zehirler. Asla evsel çöpe atmayın; sızıntıyı önlemek için uçlarını bantlayarak atık pil kutusuna atınız." },
+  { ad: "düğme pil", renk: "kırmızı", baslik: "ATIK PİL", bilgi: "Cıva veya lityum gibi çok toksik maddeler içerir. Yutulması hayati tehlike yaratır; çocuklardan uzak tutup güvenli pil kutularına atınız." },
+  { ad: "batarya", renk: "kırmızı", baslik: "E-ATIK", bilgi: "Lityum iyon içerir; ezilirse veya delinirse aniden patlama ve yangın çıkarma riski taşır. Şişmiş bataryaları bantlayıp, diğer pillerden ayrı bir poşette teslim ediniz." },
   { ad: "powerbank", renk: "kırmızı", baslik: "E-ATIK", bilgi: "Taşınabilir şarj cihazları elektronik atık noktalarına verilmelidir." },
   { ad: "elektronik", renk: "kırmızı", baslik: "E-ATIK", bilgi: "Eski kulaklık, şarj kablosu, fare (mouse) gibi e-atıklar." },
   { ad: "toner", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Yazıcı tonerleri ve kartuşları özel toplama kutularına." },
@@ -384,6 +384,7 @@ if (bulBtn) {
 }
 
 if (temizleBtn) temizleBtn.style.opacity = input && input.value ? 1 : 0;
+
 
 
 
