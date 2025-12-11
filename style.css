@@ -21,11 +21,12 @@ h1 {
   text-align: left;
 }
 
-/* 🔹 Input + X aynı kutuda */
+/* Input kapsayıcı - hem masaüstü hem mobil için */
 .input-kapsayici {
   display: inline-block;
   position: relative;
   vertical-align: middle;
+  width: auto;
 }
 
 /* Arama inputu (masaüstü) */
@@ -52,11 +53,9 @@ h1 {
   vertical-align: middle;
 }
 
-#bulBtn:hover {
-  background-color: #45a049;
-}
+#bulBtn:hover { background-color: #45a049; }
 
-/* ❌ X (masaüstü + mobil ortak) */
+/* ❌ X butonu (hem desktop hem mobile) */
 .temizle-btn {
   position: absolute;
   right: 8px;
@@ -65,102 +64,60 @@ h1 {
   border: none;
   background: none;
   color: #777;
-  font-size: 18px; /* 4px büyütüldü */
+  font-size: 18px; /* +4px büyütüldü */
   cursor: pointer;
   padding: 0;
   line-height: 1;
 }
 
-/* 🧠 Öneri kutusu (MASAÜSTÜ + MOBİL ORTAK) */
+.temizle-btn:hover { color: #555; }
+
+/* 🧠 Öneri kutusu (GENEL) */
+/* Default: statik içerik akışında (DOM sırasına göre) */
 .suggestion-box {
-  position: static !important;      /* ÖNERİLER butonun ÜSTÜNDE */
-  width: 100%;
-  margin-top: 8px;
-  background: white;
+  background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 6px;
-  max-height: 260px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  max-height: 300px;
   overflow-y: auto;
-  z-index: 1000;
   text-align: left;
+  margin-top: 8px;
+  padding: 4px 0;
+  z-index: 1000;
 }
 
+/* Öneri satırı */
 .suggestion-item {
-  padding: 8px 10px;
+  padding: 12px 14px;
   font-size: 15px;
   color: #444;
   cursor: pointer;
 }
-
 .suggestion-item:hover,
 .suggestion-item.active {
   background-color: #f0fdf4;
   color: #000;
 }
 
-/* 🟩 Bilgi kutuları */
-.renk-baslik {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 25px;
-  margin-bottom: 10px;
-}
+/* Bilgi kutuları vb. */
+.renk-baslik { display:flex; align-items:center; justify-content:center; gap:12px; margin-top:25px; margin-bottom:10px; }
+.kutu-icon { width:30px; height:30px; border-radius:6px; display:inline-block; }
+.kutu-icon.mavi{background:#007bff} .kutu-icon.kırmızı{background:#ff4c4c} .kutu-icon.yeşil{background:#28a745} .kutu-icon.sarı{background:#ffd43b} .kutu-icon.gri{background:#999}
+.baslik-yazi{font-size:22px;font-weight:900}
+.atik-cumle{font-size:18px;color:#000;margin-bottom:10px}
+.bilgi-metni{font-size:15px;color:#444;border-left:4px solid #4caf50;padding:6px 10px;border-radius:4px;max-width:420px;line-height:1.5;display:inline-block;text-align:left}
+.uyari-ikon{font-size:28px;color:#ff4c4c}
 
-.kutu-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
-  display: inline-block;
-}
-
-.kutu-icon.mavi { background: #007bff; }
-.kutu-icon.kırmızı { background: #ff4c4c; }
-.kutu-icon.yeşil { background: #28a745; }
-.kutu-icon.sarı { background: #ffd43b; }
-.kutu-icon.gri { background: #999; }
-
-.baslik-yazi {
-  font-size: 22px;
-  font-weight: 900;
-}
-
-.atik-cumle {
-  font-size: 18px;
-  color: #000;
-  margin-bottom: 10px;
-}
-
-.bilgi-metni {
-  font-size: 15px;
-  color: #444;
-  border-left: 4px solid #4caf50;
-  padding: 6px 10px;
-  border-radius: 4px;
-  max-width: 420px;
-  line-height: 1.5;
-  display: inline-block;
-  text-align: left;
-}
-
-.uyari-ikon {
-  font-size: 28px;
-  color: #ff4c4c;
-}
-
-/* 📱 MOBİL DÜZEN (masaüstü değişmiyor) */
+/* 📱 MOBİL (max 768) — burada öneriler INPUT'UN ALTINDA olacak,
+   ve "Kutuyu Göster" butonu önerilerin ALTINDA görünecek. */
 @media (max-width: 768px) {
 
-  body {
-    margin: 24px 12px 40px;
-  }
+  body { margin: 24px 12px 40px; }
 
-  .arama-alani {
-    width: 100%;
-    max-width: 480px;
-  }
+  .arama-alani { width: 100%; max-width: 480px; }
 
+  /* input-kapsayici blok, tam genişlik */
   .input-kapsayici {
     display: block;
     width: 100%;
@@ -169,29 +126,29 @@ h1 {
   .input-kapsayici input {
     width: 100%;
     font-size: 17px;
-    padding-right: 42px; /* X için geniş alan */
-    border-radius: 4px;
+    padding-right: 46px; /* X için alan */
+    border-radius: 6px;
+    box-sizing: border-box;
   }
 
-  /* X işareti – mobilde daha büyük */
-  .temizle-btn {
-    right: 10px;
-    font-size: 22px; /* masaüstüne göre 4px daha büyük */
+  /* X daha büyük mobilde */
+  .temizle-btn { right: 12px; font-size: 22px; color:#666; }
+
+  /* suggestion-box: input'un akışında gelir -> button altında değil üstünde olacak */
+  .suggestion-box {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 8px;
+    margin-bottom: 8px; /* butonla arayı açar */
   }
 
-  /* Kutuyu Göster – tam genişlik */
+  /* Butonu tamamen genişlik yap */
   #bulBtn {
     display: block;
     width: 100%;
-    margin-top: 14px;
-    border-radius: 4px;
+    margin: 6px 0 0;
+    border-radius: 6px;
     padding: 12px;
     font-size: 17px;
-  }
-
-  /* Öneriler yine input ALTINDA, buton ÜSTÜNDE */
-  .suggestion-box {
-    width: 100%;
-    margin-top: 6px;
   }
 }
