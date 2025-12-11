@@ -24,12 +24,12 @@ const atiklar = [
   // --- 🟨 SARI KUTU (Plastik Ambalajlar) ---
   { ad: "pet şişe", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "İçini boşaltıp eziniz. Kapaklarını da üzerinde bırakarak atabilirsiniz." },
   { ad: "su şişesi", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Okul ve kantinlerde en çok çıkan atıktır. Lütfen ezip atın." },
-  { ad: "ayran kutusu", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Kantin atığıdır. İçini suyla çalkalayıp atınız." },
+  { ad: "ayran kutusu", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Gıda artıkları geri dönüşüm sürecini bozar; içini mutlaka çalkalayın. Tam dönüşüm için folyo kapağı ayırıp metale, bardağı sarı kutuya atın." },
   { ad: "yoğurt kabı", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Plastik gıda kapları temizlenerek geri dönüşüme atılır." },
-  { ad: "plastik bardak", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Sebil bardakları ve şeffaf soğuk içecek bardakları." },
-  { ad: "poşet", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Market poşetleri, hışır poşetler ve naylon torbalar." },
+  { ad: "plastik bardak", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "İçindeki sıvı, diğer temiz atıkları kirleterek geri dönüşümü engeller. Mutlaka boşaltın ve yer kaplamaması için bardakları ezerek atın." },
+  { ad: "poşet", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Geri kazanılabilmesi için temiz ve kuru olması şarttır. Islak, yağlı veya gıda bulaşmış poşetler geri dönüşüm sürecini bozar." },
   { ad: "cips paketi", renk: "sarı", baslik: "PLASTİK ATIK (Tartışmalı)", bilgi: "Bazı tesisler kabul etmez (Siyah), ancak genelde plastik ambalaj grubuna atılır." },
-  { ad: "şampuan kutusu", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Deterjan, şampuan ve sıvı sabun bidonları." },
+  { ad: "şampuan kutusu", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "İçindeki kimyasallar geri dönüşüm sürecini bozar; lütfen çalkalayıp atın. Eğer pompalı kapak ise (içinde metal yay olduğu için) söküp çöpe, kutuyu ise sarı kutuya atınız." },
   { ad: "sıvı sabun kutusu", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Pompasını çıkarıp (yay içerir) kutuyu sarı kutuya atın." },
   { ad: "plastik dosya", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Eski şeffaf föyler, telli dosyalar ve plastik klasörler." },
   { ad: "pipet", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Meyve suyu ve süt pipetleri plastiktir." },
@@ -384,5 +384,6 @@ if (bulBtn) {
 }
 
 if (temizleBtn) temizleBtn.style.opacity = input && input.value ? 1 : 0;
+
 
 
