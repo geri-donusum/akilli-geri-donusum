@@ -84,6 +84,7 @@ h1 {
   margin-top: 8px;
   padding: 4px 0;
   z-index: 1000;
+  display: none;
 }
 
 /* Öneri satırı */
@@ -195,8 +196,8 @@ h1 {
 
   .suggestion-box, .suggestion-box * {
     position: relative !important;
-    display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
   }
 }
+
