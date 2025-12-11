@@ -1,355 +1,265 @@
-// script.js
-// Tam, çalışır hâl: gruplanmış atıklar + kategori başlıkları + renk kutucukları + mobil yerleştirme + keyboard destek
+// script.js — ESKİ (sade, çalışır) HAL (arama, öneri, klavye, fuzzy match)
+// Yükle: kaydet -> GitHub Pages -> cache temizle -> test et
 
-document.addEventListener("DOMContentLoaded", () => {
-  // ---------- ELEMENTLER (farklı id/class senaryolarına uyumlu) ----------
-  const input =
-    document.getElementById("inputAtik") ||
-    document.getElementById("arama") ||
-    document.querySelector(".arama-alani input") ||
-    document.querySelector("input[type='text']") ||
-    document.querySelector("input");
+// ♻️ Atık veritabanı (~45 öğe)
+const atiklar = [
+  // Kağıt
+  { ad: "gazete", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Gazeteler geri dönüşüme uygun şekilde ayrılmalıdır." },
+  { ad: "dergi", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Dergiler poşetlere konmadan katlanıp atılmalı." },
+  { ad: "kitap", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Eski kitaplar bağışlanabilir veya mavi kutuya atılabilir." },
+  { ad: "broşür", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Broşürler kağıt akışına uygundur." },
+  { ad: "fotokopi kağıdı", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Kullanılmış fotokopi kağıtlarını mavi kutuya atın." },
+  { ad: "karton kutu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Kartonlar katlanarak atılmalıdır." },
+  { ad: "süt kutusu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "İçleri temizlenip mavi kutuya atılmalıdır." },
+  { ad: "defter", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Eski defterler kağıt atığıdır." },
+  { ad: "zarf", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Zarflar ve kağıt evraklar mavi kutuda toplanır." },
+  { ad: "kartvizit", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Kartvizitler de kağıt atığıdır." },
 
-  let bulBtn =
-    document.getElementById("bulBtn") ||
-    document.querySelector("button[onclick*='bul']") ||
-    Array.from(document.querySelectorAll("button")).find(
-      b => (b.textContent || "").trim().toLowerCase() === "kutuyu göster"
-    );
+  // Plastik
+  { ad: "plastik şişe", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Pet şişeler boş olarak ve sıkıştırılmış şekilde sarı kutuya." },
+  { ad: "naylon poşet", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Poşetler ayrı toplanır; mümkünse yeniden kullanım." },
+  { ad: "plastik kap", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Plastik gıda kapları temizlendikten sonra atılmalı." },
+  { ad: "şampuan şişesi", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Şampuan ve kozmetik şişeleri temizlenip atılmalıdır." },
+  { ad: "yoğurt kabı", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Kapların içi temizlenmelidir." },
+  { ad: "plastik tabak", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Tek kullanımlık plastik tabaklar sarı kutuya." },
+  { ad: "plastik çatal", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Plastik çatal ve bıçaklar sarı kutuda toplanır." },
+  { ad: "pipet", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Plastik pipetler geri dönüşüme uygundur." },
+  { ad: "deterjan şişesi", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Boş deterjan şişeleri geri dönüşüm." },
 
-  let temizleBtn = document.querySelector(".temizle-btn");
+  // Cam
+  { ad: "cam şişe", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Cam şişeler kırılmamaya dikkat edilerek yeşil kutuya." },
+  { ad: "cam kavanoz", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Cam kavanozlar temizlenip atılmalıdır." },
+  { ad: "cam bardak", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Kırık camlar dikkatle paketlenmelidir." },
+  { ad: "kolonya şişesi", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Boş kolonya şişeleri cam grubuna girer." },
+  { ad: "reçel kavanozu", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Kavanozlar temizlenerek atılmalıdır." },
 
-  if (!input) {
-    console.error("script.js: Arama inputu bulunamadı. (inputAtik / arama / .arama-alani input / input[type=text])");
-    return;
-  }
+  // Metal
+  { ad: "teneke kutu", renk: "sarı", baslik: "METAL ATIK", bilgi: "İçecek tenekeleri iyice sıkıştırılarak atılmalı." },
+  { ad: "konserve kutusu", renk: "sarı", baslik: "METAL ATIK", bilgi: "Konserve kutuları metal grubuna girer." },
+  { ad: "alüminyum folyo", renk: "sarı", baslik: "METAL ATIK", bilgi: "Temiz folyo sarı kutuya atılabilir." },
+  { ad: "vida", renk: "sarı", baslik: "METAL ATIK", bilgi: "Küçük metal parçalar uygun şekilde toplanır." },
 
-  // suggestion-box oluştur ya da al
-  let suggestionBox = document.querySelector(".suggestion-box");
-  if (!suggestionBox) {
-    suggestionBox = document.createElement("div");
-    suggestionBox.className = "suggestion-box";
-    suggestionBox.style.display = "none";
-    // input'un parent'ının hemen sonrasına koy
-    const wrap = input.parentNode;
-    if (wrap && wrap.parentNode) wrap.parentNode.insertBefore(suggestionBox, wrap.nextSibling);
-    else document.body.appendChild(suggestionBox);
-  }
+  // Organik
+  { ad: "muz kabuğu", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Organik atıklar kompost için uygundur." },
+  { ad: "elma çekirdeği", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Meyve çekirdekleri organik atıktır." },
+  { ad: "yumurta kabuğu", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Yumurta kabukları kompostta değerlendirilebilir." },
+  { ad: "kahve posası", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Kahve posası bitki gübresi olarak kullanılabilir." },
+  { ad: "çay poşeti", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Çay poşetleri organik atığa aittir." },
+  { ad: "ekmek", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Bayat ekmek organik atıktır." },
+  { ad: "sebze kabuğu", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Sebze-meyve kabukları organik atıktır." },
+  { ad: "yemek artığı", renk: "gri", baslik: "ORGANİK ATIK", bilgi: "Yemek atıkları komposta uygundur." },
 
-  // temizle butonu yoksa oluştur
-  if (!temizleBtn) {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "temizle-btn";
-    btn.title = "Temizle";
-    btn.innerHTML = "✕";
-    const wrap = input.parentNode;
-    if (wrap) {
-      if (getComputedStyle(wrap).position === "static") wrap.style.position = "relative";
-      wrap.appendChild(btn);
-      temizleBtn = btn;
+  // Tehlikeli / Özel
+  { ad: "pil", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Piller özel toplama noktalarına verilmelidir." },
+  { ad: "batarya", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Bataryalar ayrı biriktirilmelidir." },
+  { ad: "ampul", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Kırılmadan özenle teslim edin." },
+  { ad: "ilaç", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "İlaç atıkları eczanelerde toplanabilir." },
+  { ad: "sprey kutusu", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Basınçlı kutular özel işleme gerektirir." },
+  { ad: "boya kutusu", renk: "kırmızı", baslik: "TEHLİKELİ ATIK", bilgi: "Boya artıklarını yetkili noktalara verin." },
+
+  // Ek birkaç yaygın örnek
+  { ad: "pet şişe", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Pet şişeler geri dönüşüme uygundur." },
+  { ad: "süt kutusu karton", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Süt kartonları mavi kutuya atılmalıdır." },
+  { ad: "cam parça", renk: "yeşil", baslik: "CAM ATIK", bilgi: "Kırık cam parçaları dikkatle paketlenmeli." },
+  { ad: "metal kapak", renk: "sarı", baslik: "METAL ATIK", bilgi: "Kapaklar metal grubuna verilebilir." },
+  { ad: "plastik poşet", renk: "sarı", baslik: "PLASTİK ATIK", bilgi: "Poşetleri mümkün olduğunca azaltın." }
+];
+
+// DOM elemanlarını al
+const input = document.getElementById("inputAtik") || document.getElementById("arama");
+const suggestionBox = document.querySelector(".suggestion-box") || (() => {
+  const el = document.createElement("div");
+  el.className = "suggestion-box";
+  // input parent'ının sonuna ekleme denemesi
+  const parent = (input && input.parentNode) || document.body;
+  parent.appendChild(el);
+  return el;
+})();
+const sonucAlani = document.getElementById("sonuc");
+const appTitle = document.getElementById("appTitle");
+const temizleBtn = document.querySelector(".temizle-btn");
+const bulBtn = document.getElementById("bulBtn") || document.querySelector("button[onclick*='bul']");
+
+// Başlığa tıklayınca sayfa yenilensin (hem masaüstü hem mobil)
+if (appTitle) appTitle.addEventListener("click", () => location.reload());
+
+// Temizle butonu fonksiyonu
+function temizleInput() {
+  if (!input) return;
+  input.value = "";
+  suggestionBox.innerHTML = "";
+  suggestionBox.style.display = "none";
+  if (sonucAlani) sonucAlani.innerHTML = "";
+  input.focus();
+}
+
+// Levenshtein (yazım hatası düzeltme)
+function levenshtein(a, b) {
+  const A = a || "";
+  const B = b || "";
+  const dp = Array(A.length + 1).fill(null).map(() => Array(B.length + 1).fill(0));
+  for (let i = 0; i <= A.length; i++) dp[i][0] = i;
+  for (let j = 0; j <= B.length; j++) dp[0][j] = j;
+  for (let i = 1; i <= A.length; i++) {
+    for (let j = 1; j <= B.length; j++) {
+      const cost = A[i - 1] === B[j - 1] ? 0 : 1;
+      dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost);
     }
   }
+  return dp[A.length][B.length];
+}
 
-  // ---------- GRUPLANMIŞ ATIK VERİSİ (60 öğe) ----------
-  // Her grubun bir renk sınıfı / etiketi var (mavi/sarı/yeşil/gri/kırmızı)
-  const groups = {
-    "Kağıt Atık": {
-      renk: "mavi",
-      items: [
-        "gazete","dergi","kitap","broşür","fotokopi kağıdı",
-        "karton kutu","defter","zarf","kartvizit","peçete kutusu"
-      ]
-    },
-    "Plastik": {
-      renk: "sarı",
-      items: [
-        "plastik şişe","yoğurt kabı","plastik kap","şampuan şişesi","deterjan şişesi",
-        "plastik tabak","plastik çatal","plastik bardak","şeffaf plastik","naylon poşet"
-      ]
-    },
-    "Cam": {
-      renk: "yeşil",
-      items: [
-        "cam şişe","cam kavanoz","cam bardak","kolonya şişesi","reçel kavanozu",
-        "cam tabak","cam sürahi","şurup şişesi","zeytin kavanozu","parfüm şişesi"
-      ]
-    },
-    "Metal": {
-      renk: "sarı",
-      items: [
-        "konserve kutusu","teneke kutu","alüminyum folyo","bira kutusu","soda kutusu",
-        "metal kapak","çay kutusu","kahve kutusu","ton balığı kutusu","vida/çivi (küçük)"
-      ]
-    },
-    "Organik Atık": {
-      renk: "gri",
-      items: [
-        "muz kabuğu","elma çekirdeği","yemek artığı","ekmek","sebze kabuğu",
-        "kahve posası","çay poşeti","yumurta kabuğu","meyve kabuğu","patates kabuğu"
-      ]
-    },
-    "Tehlikeli / Özel Atık": {
-      renk: "kırmızı",
-      items: [
-        "pil","batarya","ampul","ilaç","sprey kutusu",
-        "boya kutusu","eski telefon","eski batarya","kartuş","civa termometre"
-      ]
+// Önerileri göster
+let aktifIndex = -1;
+function guncelleSecim(items) {
+  items.forEach((el, i) => {
+    el.classList.toggle("active", i === aktifIndex);
+    if (i === aktifIndex) {
+      el.scrollIntoView({ block: "nearest" });
     }
-  };
+  });
+}
 
-  // düz tüm madde listesi (arama kolaylığı)
-  const allItems = Object.values(groups).flatMap(g => g.items);
-
-  // ---------- YARDIMCI FONKSİYONLAR ----------
-  function isMobile() {
-    return Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0) <= 768;
-  }
-
-  function placeSuggestionMobile() {
-    try {
-      const wrap = input.parentNode;
-      if (!wrap) return;
-      // suggestionBox'ı input'un hemen sonrasına koy
-      if (wrap.nextElementSibling !== suggestionBox) {
-        wrap.parentNode.insertBefore(suggestionBox, wrap.nextSibling);
-      }
-      // mobilde suggestionBox'tan sonra bulBtn gelsin (buton önerilerin altına)
-      if (isMobile() && bulBtn) {
-        if (suggestionBox.nextElementSibling !== bulBtn) {
-          suggestionBox.parentNode.insertBefore(bulBtn, suggestionBox.nextSibling);
-        }
-      }
-    } catch (err) {
-      console.error("placeSuggestionMobile err:", err);
-    }
-  }
-
-  function clearSuggestions() {
+if (input) {
+  input.addEventListener("input", () => {
+    const q = input.value.toLowerCase().trim();
     suggestionBox.innerHTML = "";
-    suggestionBox.style.display = "none";
-    activeIndex = -1;
-  }
+    aktifIndex = -1;
+    if (!q) { suggestionBox.style.display = "none"; return; }
 
-  // HTML parçaları oluşturmak için yardımcı
-  function makeGroupHeader(title) {
-    const h = document.createElement("div");
-    h.className = "suggestion-group";
-    h.textContent = title;
-    // stil doğrudan değil; CSS ile belirle daha iyi. Bu sadece minimal fallback görünüm.
-    h.style.fontWeight = "700";
-    h.style.padding = "8px 12px";
-    h.style.background = "#fafafa";
-    h.style.borderBottom = "1px solid #eee";
-    return h;
-  }
+    const eslesenler = atiklar.filter(a => a.ad.includes(q)).slice(0, 10);
+    if (!eslesenler.length) { suggestionBox.style.display = "none"; return; }
 
-  function makeItemElement(text, renkClass) {
-    const item = document.createElement("div");
-    item.className = "suggestion-item";
-    item.setAttribute("data-value", text);
-    item.style.display = "flex";
-    item.style.alignItems = "center";
-    item.style.gap = "10px";
-    item.style.padding = "10px 12px";
-    // renk kutucuğu
-    const colorBox = document.createElement("span");
-    colorBox.className = "kutu-icon " + (renkClass || "");
-    colorBox.style.width = "14px";
-    colorBox.style.height = "14px";
-    colorBox.style.borderRadius = "3px";
-    colorBox.style.display = "inline-block";
-    // metin
-    const txt = document.createElement("span");
-    txt.textContent = text;
-    txt.style.flex = "1";
-    item.appendChild(colorBox);
-    item.appendChild(txt);
-    return item;
-  }
-
-  // ---------- ÖNERİ OLUŞTURMA (gruplu, kategori başlıklı) ----------
-  function buildGroupedSuggestions(q) {
-    suggestionBox.innerHTML = "";
-    const query = (q || "").trim().toLowerCase();
-    let matchedAny = false;
-
-    Object.entries(groups).forEach(([groupName, obj]) => {
-      const { renk, items } = obj;
-      // filtre
-      const matchedItems = items.filter(it => it.toLowerCase().includes(query));
-      if (matchedItems.length) {
-        matchedAny = true;
-        // başlık
-        suggestionBox.appendChild(makeGroupHeader(groupName));
-        // öğeler
-        matchedItems.forEach(itemText => {
-          const el = makeItemElement(itemText, renk);
-          el.addEventListener("click", () => {
-            input.value = itemText;
-            clearSuggestions();
-            input.focus();
-            // eğer sayfada global bul() fonksiyonu varsa çağır
-            if (typeof window.bul === "function") {
-              try { window.bul(); } catch (err) { console.error("window.bul() hata:", err); }
-            }
-          });
-          suggestionBox.appendChild(el);
-        });
-      }
+    eslesenler.forEach(a => {
+      const item = document.createElement("div");
+      item.className = "suggestion-item";
+      item.textContent = a.ad;
+      item.addEventListener("click", () => {
+        input.value = a.ad;
+        suggestionBox.innerHTML = "";
+        suggestionBox.style.display = "none";
+        // otomatik arama istersen buraya bul() çağrısı ekle
+      });
+      suggestionBox.appendChild(item);
     });
-
-    if (!matchedAny) {
-      const no = document.createElement("div");
-      no.className = "suggestion-none";
-      no.textContent = "Eşleşen öğe bulunamadı.";
-      no.style.padding = "12px";
-      no.style.color = "#666";
-      suggestionBox.appendChild(no);
-    }
-
     suggestionBox.style.display = "block";
-    placeSuggestionMobile();
-    activeIndex = -1;
-    cacheKeyboardItems(); // keyboard navigation için öğeleri güncelle
-  }
-
-  // ---------- KLAVYE NAVİGASYONU ----------
-  let activeIndex = -1;
-  function cacheKeyboardItems() {
-    keyboardItems = Array.from(suggestionBox.querySelectorAll(".suggestion-item"));
-  }
-  let keyboardItems = [];
-
-  function highlightIndex(idx) {
-    keyboardItems.forEach((el, i) => {
-      if (i === idx) {
-        el.classList.add("active");
-        el.style.background = "#e6f5ff";
-        el.style.fontWeight = "700";
-        // scroll into view if necessary
-        el.scrollIntoView({ block: "nearest", inline: "nearest" });
-      } else {
-        el.classList.remove("active");
-        el.style.background = "";
-        el.style.fontWeight = "";
-      }
-    });
-  }
-
-  // ---------- DEBOUNCE ----------
-  let dbTimer = null;
-  function suggestDebounced(q) {
-    clearTimeout(dbTimer);
-    dbTimer = setTimeout(() => buildGroupedSuggestions(q), 120);
-  }
-
-  // ---------- OLAYLAR ----------
-  input.addEventListener("input", (e) => {
-    const v = e.target.value || "";
-    if (!v.trim()) clearSuggestions();
-    else suggestDebounced(v);
   });
 
-  // klavye: oklar + enter
+  // Klavye ile gezinme ve Enter
   input.addEventListener("keydown", (e) => {
-    const items = keyboardItems || [];
-    if (suggestionBox.style.display === "none" || items.length === 0) {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        triggerBul();
-      }
-      return;
-    }
-
+    const items = Array.from(suggestionBox.querySelectorAll(".suggestion-item"));
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      activeIndex = (activeIndex + 1) % items.length;
-      highlightIndex(activeIndex);
+      if (!items.length) return;
+      aktifIndex = (aktifIndex + 1) % items.length;
+      guncelleSecim(items);
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      activeIndex = (activeIndex - 1 + items.length) % items.length;
-      highlightIndex(activeIndex);
+      if (!items.length) return;
+      aktifIndex = (aktifIndex - 1 + items.length) % items.length;
+      guncelleSecim(items);
     } else if (e.key === "Enter") {
       e.preventDefault();
-      if (activeIndex >= 0 && items[activeIndex]) {
-        const val = items[activeIndex].getAttribute("data-value");
-        input.value = val;
-        clearSuggestions();
-        // call bul if present
-        if (typeof window.bul === "function") {
-          try { window.bul(); } catch (err) { console.error("window.bul() hata:", err); }
-        }
+      if (aktifIndex >= 0 && items[aktifIndex]) {
+        input.value = items[aktifIndex].textContent;
+        suggestionBox.innerHTML = "";
+        suggestionBox.style.display = "none";
+        // çağırılacak gerçek arama fonksiyonu varsa onu tetikle
+        if (typeof window.bul === "function") window.bul();
       } else {
-        triggerBul();
+        // doğrudan arama
+        if (typeof window.bul === "function") window.bul();
+        else bul(); // fallback
       }
     } else if (e.key === "Escape") {
-      clearSuggestions();
+      suggestionBox.innerHTML = "";
+      suggestionBox.style.display = "none";
     }
   });
+}
 
-  // X temizle
-  if (temizleBtn) {
-    temizleBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      input.value = "";
-      input.focus();
-      clearSuggestions();
+// Arama / bul fonksiyonu
+function bul() {
+  const q = (input && input.value.toLowerCase().trim()) || "";
+  if (!q) return;
+  suggestionBox.innerHTML = "";
+  suggestionBox.style.display = "none";
+
+  // önce tam eşleşme
+  let atik = atiklar.find(a => a.ad === q);
+
+  // yazım hatası var mı bak (levenshtein)
+  if (!atik) {
+    let enYakin = null;
+    let min = Infinity;
+    atiklar.forEach(a => {
+      const d = levenshtein(q, a.ad);
+      if (d < min) { min = d; enYakin = a; }
     });
-  }
-
-  // Buton (Kutuyu Göster)
-  if (bulBtn) {
-    bulBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      triggerBul();
-    });
-  }
-
-  function triggerBul() {
-    const q = (input.value || "").trim();
-    // öncelik: sayfada global bul() fonksiyonu varsa onu çağır
-    if (typeof window.bul === "function") {
-      try { window.bul(); } catch (err) { console.error("window.bul() hata:", err); }
+    if (enYakin && min <= 3) {
+      // yakın eşleşme bulundu
+      atik = enYakin;
+      // gösterirken kullanıcıya uyar
+      if (sonucAlani) {
+        sonucAlani.innerHTML = `
+          <div class="renk-baslik">
+            <div class="kutu-icon ${atik.renk}"></div>
+            <div class="baslik-yazi">${atik.baslik}</div>
+          </div>
+          <div class="atik-cumle">"${q}" yerine "<strong>${atik.ad}</strong>" olarak algılandı.</div>
+          <div class="bilgi-metni">💡 ${atik.bilgi}</div>
+        `;
+      }
       return;
-    }
-    // yoksa fallback: tam eşleşen varsa göster, yoksa grouped suggestions göster
-    if (!q) {
-      buildGroupedSuggestions("");
-      return;
-    }
-    const found = allItems.find(i => i.toLowerCase() === q.toLowerCase());
-    if (found) {
-      // fallback: göstermeyi suggestionBox içinde yap
-      suggestionBox.innerHTML = `<div class="suggestion-item" style="padding:14px;background:#eef;">Sonuç: <strong>${found}</strong></div>`;
-      suggestionBox.style.display = "block";
-      placeSuggestionMobile();
-      cacheKeyboardItems();
-    } else {
-      buildGroupedSuggestions(q);
     }
   }
 
-  // dış tıklama ile kapatma
-  document.addEventListener("click", (e) => {
-    const t = e.target;
-    if (!suggestionBox || !input) return;
-    if (t === input || input.contains(t) || suggestionBox.contains(t) || (bulBtn && bulBtn.contains(t)) || (temizleBtn && temizleBtn.contains(t))) {
-      return;
+  if (atik) {
+    if (sonucAlani) {
+      sonucAlani.innerHTML = `
+        <div class="renk-baslik">
+          <div class="kutu-icon ${atik.renk}"></div>
+          <div class="baslik-yazi">${atik.baslik}</div>
+        </div>
+        <div class="atik-cumle">${atik.ad} kutusuna atılmalıdır.</div>
+        <div class="bilgi-metni">💡 ${atik.bilgi}</div>
+      `;
     }
-    clearSuggestions();
+  } else {
+    if (sonucAlani) {
+      sonucAlani.innerHTML = `
+        <div class="renk-baslik">
+          <div class="uyari-ikon">⚠️</div>
+          <div class="baslik-yazi">ATIK BULUNAMADI</div>
+        </div>
+        <div class="atik-cumle">Bu atık listede yer almıyor.</div>
+        <div class="bilgi-metni">💡 Lütfen geçerli bir atık türü giriniz (örnek: cam şişe, pil, süt kutusu).</div>
+      `;
+    }
+  }
+}
+
+// temizle butonu varsa bağla
+if (temizleBtn) {
+  temizleBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    temizleInput();
   });
+}
 
-  // resize => place
-  window.addEventListener("resize", () => {
-    placeSuggestionMobile();
+// "Kutuyu Göster" butonun onclick'ine bağlı çalışılabilir; eğer buton farklı isimdeyse yukarıda bulBtn ile bağlanabilir
+if (bulBtn && !bulBtn.onclick) {
+  bulBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    bul();
   });
+}
 
-  // başlangıç konumu
-  placeSuggestionMobile();
-
-  // expose for debug
-  window.__geriDonusum = {
-    groups, buildGroupedSuggestions, clearSuggestions, placeSuggestionMobile
-  };
+// dış tıklamada önerileri kapat
+document.addEventListener("click", (e) => {
+  const target = e.target;
+  if (!suggestionBox || !input) return;
+  if (target === input || input.contains(target) || suggestionBox.contains(target)) return;
+  suggestionBox.innerHTML = "";
+  suggestionBox.style.display = "none";
 });
