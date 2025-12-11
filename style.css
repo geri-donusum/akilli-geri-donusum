@@ -21,7 +21,7 @@ h1 {
   text-align: left;
 }
 
-/* 🔹 Input + X aynı kutuda */
+/* Input + X aynı kutuda (masaüstü) */
 .input-kapsayici {
   display: inline-block;
   position: relative;
@@ -34,7 +34,7 @@ h1 {
   font-size: 16px;
   border-radius: 4px 0 0 4px;
   border: 1px solid #ccc;
-  width: 220px; /* MASAÜSTÜ GENİŞLİK */
+  width: 220px; /* masaüstü genişliği (korundu) */
   box-sizing: border-box;
 }
 
@@ -56,7 +56,7 @@ h1 {
   background-color: #45a049;
 }
 
-/* ❌ Temizle (X) – input’un İÇİNDE (masaüstü) */
+/* ❌ Temizle (X) – input’un içinde (masaüstü) */
 .temizle-btn {
   position: absolute;
   right: 8px;
@@ -65,7 +65,7 @@ h1 {
   border: none;
   background: none;
   color: #999;
-  font-size: 18px; /* masaüstünde büyüklük */
+  font-size: 18px;
   cursor: pointer;
   padding: 0;
   line-height: 1;
@@ -76,17 +76,17 @@ h1 {
   color: #555;
 }
 
-/* 🧠 Öneri kutusu – masaüstü davranışı (korundu) */
+/* Öneri kutusu – masaüstü (korundu) */
 .suggestion-box {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 220px; /* input ile aynı genişlik (masaüstü) */
+  width: 220px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-top: none;
   border-radius: 0 0 6px 6px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   z-index: 10;
   text-align: left;
   max-height: 260px;
@@ -99,85 +99,38 @@ h1 {
   color: #555;
   cursor: pointer;
 }
-
 .suggestion-item:hover,
 .suggestion-item.active {
   background-color: #f0fdf4;
   color: #000;
 }
 
-/* 🟩 Renk kutusu + başlık hizalaması */
-.renk-baslik {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 25px;
-  margin-bottom: 10px;
-}
+/* Diğer masaüstü stilleri (korundu) */
+.renk-baslik { display:flex; align-items:center; justify-content:center; gap:12px; margin-top:25px; margin-bottom:10px; }
+.kutu-icon { width:30px; height:30px; border-radius:6px; display:inline-block; }
+.kutu-icon.mavi{background:#007bff;} .kutu-icon.kırmızı{background:#ff4c4c;} .kutu-icon.yeşil{background:#28a745;} .kutu-icon.sarı{background:#ffd43b;} .kutu-icon.gri{background:#999;}
+.baslik-yazi{font-size:22px;font-weight:900;}
+.atik-cumle{font-size:18px;color:#000;margin-bottom:10px;}
+.bilgi-metni{font-size:15px;color:#444;background:transparent;padding:6px 10px;border-left:4px solid #4caf50;border-radius:4px;display:inline-block;text-align:left;max-width:420px;line-height:1.5;margin-top:6px;}
+.uyari-ikon{font-size:28px;color:#ff4c4c;line-height:1;}
 
-/* 🎨 Renk ikonları */
-.kutu-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
-  display: inline-block;
-}
-
-.kutu-icon.mavi { background: #007bff; }
-.kutu-icon.kırmızı { background: #ff4c4c; }
-.kutu-icon.yeşil { background: #28a745; }
-.kutu-icon.sarı { background: #ffd43b; }
-.kutu-icon.gri { background: #999; }
-
-.baslik-yazi {
-  font-size: 22px;
-  font-weight: 900;
-}
-
-.atik-cumle {
-  font-size: 18px;
-  color: #000;
-  margin-bottom: 10px;
-}
-
-.bilgi-metni {
-  font-size: 15px;
-  color: #444;
-  background-color: transparent;
-  padding: 6px 10px;
-  border-left: 4px solid #4caf50;
-  border-radius: 4px;
-  display: inline-block;
-  text-align: left;
-  max-width: 420px;
-  line-height: 1.5;
-  margin-top: 6px;
-}
-
-.uyari-ikon {
-  font-size: 28px;
-  color: #ff4c4c;
-  line-height: 1;
-}
-
-/* 📱 SADECE MOBİL DÜZEN (masaüstüne hiç dokunmuyor) */
+/* ================= MOBILE (max-width:768px) - burayı değiştiriyoruz ================= */
 @media (max-width: 768px) {
 
-  /* sayfa kenar boşlukları, ortalama mobil görünüm */
+  /* sayfa kenar boşlukları, mobil görünüm */
   body {
     margin: 24px 12px 40px;
   }
 
-  /* Arama alanı: tam genişliğe uyum sağlasın ve ortalı kalsın */
+  /* arama alanı: ortalanmış, sabit max genişlik (uyumlu görünüm için) */
   .arama-alani {
     width: 100%;
-    max-width: 360px;      /* mobil için sabit max genişlik (iPhone7/13 uyumlu) */
+    max-width: 360px;     /* iPhone7/13 arasında iyi sonuç verir */
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* Input kapsayıcı mobilde full-width ve ortalı */
+  /* input kapsayıcı akışta (öneriler inputun hemen altında çıksın) */
   .input-kapsayici {
     display: block;
     width: 100%;
@@ -185,42 +138,43 @@ h1 {
     box-sizing: border-box;
   }
 
-  /* Input: tam genişlik, X için yeterli sağ boşluk */
+  /* input: tam genişlik, X için geniş sağ boşluk */
   .input-kapsayici input {
     width: 100%;
     font-size: 16px;
-    padding: 12px 52px 12px 12px;   /* üst/alt=12, sağda X için geniş boşluk */
+    padding: 12px 56px 12px 12px; /* sağda X için 56px geniş alan */
     border-radius: 6px;
     box-sizing: border-box;
     border: 1px solid #ddd;
   }
 
-  /* ❌ X işareti – KUTUNUN İÇİNDE, ortalanmış ve daha büyük */
+  /* ❌ X işareti: inputun içinde, sağa hizalı, daha büyük */
   .temizle-btn {
+    position: absolute;
     right: 14px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 24px; /* mobilde büyük gösterim */
+    font-size: 26px;   /* mobilde büyük görünmesi için */
     color: #999;
     z-index: 40;
     background: none;
     border: none;
     padding: 0;
     line-height: 1;
+    cursor: pointer;
   }
-
   .temizle-btn:hover { color: #666; }
 
-  /* Öneri kutusu: artık akışta, input'un hemen altında yer alır */
+  /* ÖNERİ KUTUSU MOBİLDE AKIŞTA: INPUT'un hemen altında (STATIC/AKIŞ) */
   .suggestion-box {
-    position: static;             /* akışa sokuldu -> input altı */
+    position: static;       /* akışa sokuldu -> input altı */
     width: 100%;
-    margin-top: 8px;              /* input ve öneriler arası boşluk */
+    margin-top: 8px;
     border: 1px solid #ddd;
     border-radius: 6px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     overflow-y: auto;
-    max-height: 260px;
+    max-height: 320px;
     background: #fff;
     z-index: 30;
   }
@@ -241,12 +195,13 @@ h1 {
     box-sizing: border-box;
   }
 
-  /* Eğer öneri kutusu görünürse butonla arasındaki boşluğu koru */
+  /* Eğer öneri kutusu input ile aynı kapsayıcı içindeyse, buton önerilerin altına gelecek.
+     Bu garanti için HTML sıralaması şu olmalı: input -> suggestion-box -> button */
   .input-kapsayici + .suggestion-box + #bulBtn {
     margin-top: 10px;
   }
 
-  /* Küçük ekranlarda yazı/bileşenler için daha fazla sol-sağ boşluk */
+  /* küçük ekranlarda bileşenler için sol-sağ boşluk */
   .arama-alani,
   .input-kapsayici,
   .suggestion-box {
@@ -254,11 +209,3 @@ h1 {
     padding-right: 0;
   }
 }
-
-/* -- Ek not: öneri kutusunun görünürlüğü JS ile kontrol ediliyorsa --
-   Eğer otomatik olarak kapanma/yukarı kayma JS tarafından oluyorsa,
-   suggestion-box'u göstermek için JS'deki sınıf değişimlerini kontrol et.
-   Örneğin: suggestion-box'un parent'ı display:none/visibility:hidden yapıyorsa
-   CSS tek başına yetmeyebilir. (Gerekirse script.js'i de gönder, JS'ini
-   kontrol edip önerilerin mobilde akışta kalmasını garanti ederim.)
-*/
