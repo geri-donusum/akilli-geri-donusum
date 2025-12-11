@@ -1,72 +1,110 @@
-// script.js — Türkiye Sıfır Atık Yönetmeliği'ne Tam Uyumlu Sürüm
-// (Okul, Sokak, Kantin Karma Örnekler)
+// script.js — Türkiye Sıfır Atık Yönetmeliği'ne Tam Uyumlu GENİŞLETİLMİŞ Sürüm
 
 // -----------------------------
-// ♻️ ATIK VERİTABANI
+// ♻️ ATIK VERİTABANI (Genişletilmiş Liste)
 // -----------------------------
 const atiklar = [
   // --- 🟦 MAVİ KUTU (Kağıt & Karton) ---
-  { ad: "defter", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Eski defterler (telleri çıkarılarak) ve kitaplar mavi kutuya atılır." },
-  { ad: "kağıt", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Kullanılmış test kağıtları ve A4 kağıtlar temizse geri dönüştürülür." },
+  { ad: "defter", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Eski defterler (telleri/spiralleri çıkarılarak) mavi kutuya atılır." },
+  { ad: "kitap", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Kullanılmayacak durumdaki ders kitapları ve romanlar geri dönüştürülebilir." },
+  { ad: "kağıt", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Üzerinde karalama olsa bile kağıtlar geri dönüştürülebilir." },
   { ad: "karton koli", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Koli bantlarını söküp, kutuyu iyice ezerek (hacim kaplamaması için) atınız." },
-  { ad: "gazete", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Gazeteler ve el ilanları mavi kutuya uygundur." },
-  { ad: "dergi", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Parlak kapaklı dergiler ve broşürler kağıt geri dönüşüme atılır." },
-  { ad: "süt kutusu", renk: "mavi", baslik: "KOMPOZİT / KAĞIT", bilgi: "Tetra Pak kutular (meyve suyu/süt) içindeki sıvı boşaltılıp ezilerek mavi kutuya atılır." },
-  { ad: "karton bardak", renk: "mavi", baslik: "KAĞIT (TEMİZSE)", bilgi: "Sadece çok temiz karton bardaklar maviye atılır. İçi plastik kaplıysa Siyah (Çöp) kutusuna atın." },
-  { ad: "ilaç kutusu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Karton ilaç ambalajları ve prospektüsler mavi kutuya atılır." },
+  { ad: "gazete", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Gazeteler ve ekleri mavi kutuya uygundur." },
+  { ad: "dergi", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Parlak kapaklı dergiler, kataloglar ve broşürler." },
+  { ad: "el ilanı", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Posta kutularına bırakılan reklam kağıtları." },
+  { ad: "süt kutusu", renk: "mavi", baslik: "KOMPOZİT / KAĞIT", bilgi: "Tetra Pak (süt/meyve suyu) kutuları; içi yıkanıp ezilerek atılmalıdır." },
+  { ad: "meyve suyu kutusu", renk: "mavi", baslik: "KOMPOZİT / KAĞIT", bilgi: "Pipeti çıkarıp plastik kutuya, kutuyu ezerek mavi kutuya atın." },
+  { ad: "karton bardak", renk: "mavi", baslik: "KAĞIT (Sadece Temiz)", bilgi: "Sadece içi yıkanmış/temiz karton bardaklar. Kahve lekesi çoksa Siyaha atın." },
+  { ad: "yumurta kolisi", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Karton yumurta viyolleri kağıt geri dönüşümüdür." },
+  { ad: "ilaç kutusu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Karton ilaç ambalajları ve prospektüs kağıtları." },
+  { ad: "zarf", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Pencereli zarfların plastik kısmını söküp atınız." },
+  { ad: "kese kağıdı", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Yağsız ve temiz kese kağıtları." },
+  { ad: "tuvalet kağıdı rulosu", renk: "mavi", baslik: "KAĞIT ATIK", bilgi: "Biten ruloların karton kısmı mavi kutuya atılır." },
 
   // --- 🟨 SARI KUTU (Plastik Ambalajlar) ---
   { ad: "pet şişe", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "İçini boşaltıp eziniz. Kapaklarını da üzerinde bırakarak atabilirsiniz." },
-  { ad: "ayran kutusu", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Kantinlerde sık çıkan ayran ve yoğurt kaplarını yıkayıp atınız." },
-  { ad: "plastik bardak", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Sebil bardakları ve şeffaf plastik bardaklar sarı kutuya atılır." },
-  { ad: "poşet", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Market poşetleri, naylon ambalajlar ve streç filmler plastik atığıdır." },
-  { ad: "şampuan kutusu", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Deterjan ve şampuan bidonlarını çalkalayıp atınız." },
-  { ad: "plastik dosya", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Eski şeffaf dosyalar ve plastik klasörler geri dönüştürülebilir." },
-  { ad: "pipet", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Plastik pipetler sarı kutuya atılmalıdır." },
-  { ad: "tost ambalajı", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Jelatin ambalajlar plastik sınıfına girer (çok yağlı değilse)." },
+  { ad: "su şişesi", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Okul ve kantinlerde en çok çıkan atıktır. Lütfen ezip atın." },
+  { ad: "ayran kutusu", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Kantin atığıdır. İçini suyla çalkalayıp atınız." },
+  { ad: "yoğurt kabı", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Plastik gıda kapları temizlenerek geri dönüşüme atılır." },
+  { ad: "plastik bardak", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Sebil bardakları ve şeffaf soğuk içecek bardakları." },
+  { ad: "poşet", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Market poşetleri, hışır poşetler ve naylon torbalar." },
+  { ad: "cips paketi", renk: "sari", baslik: "PLASTİK ATIK (Tartışmalı)", bilgi: "Bazı tesisler kabul etmez (Siyah), ancak genelde plastik ambalaj grubuna atılır." },
+  { ad: "şampuan kutusu", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Deterjan, şampuan ve sıvı sabun bidonları." },
+  { ad: "sıvı sabun kutusu", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Pompasını çıkarıp (yay içerir) kutuyu sarı kutuya atın." },
+  { ad: "plastik dosya", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Eski şeffaf föyler, telli dosyalar ve plastik klasörler." },
+  { ad: "pipet", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Meyve suyu ve süt pipetleri plastiktir." },
+  { ad: "streç film", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Temiz streç filmler geri dönüştürülebilir." },
+  { ad: "plastik kapak", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "Mavi kapaklar ve diğer şişe kapakları." },
+  { ad: "ketçap şişesi", renk: "sari", baslik: "PLASTİK ATIK", bilgi: "İçi tamamen yıkanmış plastik sos şişeleri." },
+  { ad: "oyuncak", renk: "sari", baslik: "SERT PLASTİK", bilgi: "Kırılmış, pilsiz plastik oyuncaklar (elektronik değilse)." },
 
   // --- 🟩 YEŞİL KUTU (Cam) ---
-  { ad: "cam şişe", renk: "yesil", baslik: "CAM ATIK", bilgi: "Su şişeleri (kapaksız) yeşil kutuya atılır." },
+  { ad: "cam şişe", renk: "yesil", baslik: "CAM ATIK", bilgi: "Su ve meşrubat şişeleri. Kapaklarını çıkarıp atınız." },
   { ad: "soda şişesi", renk: "yesil", baslik: "CAM ATIK", bilgi: "Maden suyu şişeleri en değerli cam atığıdır." },
-  { ad: "kavanoz", renk: "yesil", baslik: "CAM ATIK", bilgi: "Reçel ve salça kavanozları yıkanıp yeşil kutuya atılmalıdır." },
-  { ad: "parfüm şişesi", renk: "yesil", baslik: "CAM ATIK", bilgi: "Boş cam parfüm şişeleri cam kumbarasına atılabilir." },
+  { ad: "gazoz şişesi", renk: "yesil", baslik: "CAM ATIK", bilgi: "Cam meşrubat şişeleri." },
+  { ad: "kavanoz", renk: "yesil", baslik: "CAM ATIK", bilgi: "Reçel, turşu, salça kavanozları (yıkanmış ve kapaksız)." },
+  { ad: "parfüm şişesi", renk: "yesil", baslik: "CAM ATIK", bilgi: "Boş cam parfüm ve kolonya şişeleri." },
+  { ad: "ilaç şişesi", renk: "yesil", baslik: "CAM ATIK", bilgi: "Cam şuruplar (içi boş ve yıkanmış) yeşil kutuya atılır." },
 
   // --- 🔘 GRİ KUTU (Metal) ---
   { ad: "kola kutusu", renk: "gri", baslik: "METAL ATIK", bilgi: "Alüminyum içecek kutularını ezip gri kutuya atınız." },
-  { ad: "konserve kutusu", renk: "gri", baslik: "METAL ATIK", bilgi: "Salça ve mısır konserveleri yıkanıp metal kutusuna atılır." },
-  { ad: "metal kapak", renk: "gri", baslik: "METAL ATIK", bilgi: "Cam kavanozların metal kapakları buraya atılmalıdır." },
-  { ad: "alüminyum folyo", renk: "gri", baslik: "METAL ATIK", bilgi: "Temiz alüminyum folyolar ve gıda kapları metal geri dönüşümüdür." },
-  { ad: "gazoz kapağı", renk: "gri", baslik: "METAL ATIK", bilgi: "Metal şişe kapakları gri kutuya atılır." },
+  { ad: "gazoz kutusu", renk: "gri", baslik: "METAL ATIK", bilgi: "Teneke içecek kutuları." },
+  { ad: "konserve kutusu", renk: "gri", baslik: "METAL ATIK", bilgi: "Salça, mısır, ton balığı konserveleri (yıkanmış)." },
+  { ad: "metal kapak", renk: "gri", baslik: "METAL ATIK", bilgi: "Cam kavanozların ve şişelerin metal kapakları." },
+  { ad: "alüminyum folyo", renk: "gri", baslik: "METAL ATIK", bilgi: "Temiz alüminyum folyolar ve alüminyum gıda kapları." },
+  { ad: "deodorant şişesi", renk: "gri", baslik: "METAL ATIK", bilgi: "Boş deodorant ve saç spreyi kutuları (Delmeyiniz, ateşe atmayınız)." },
+  { ad: "tel zımba", renk: "gri", baslik: "METAL ATIK", bilgi: "Büyük miktardaki zımba telleri ve ataşlar." },
+  { ad: "çatal kaşık", renk: "gri", baslik: "METAL ATIK", bilgi: "Eskimiş metal mutfak gereçleri." },
 
   // --- 🟤 KAHVERENGİ KUTU (Organik / Kompost) ---
-  { ad: "meyve kabuğu", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Elma, muz, mandalina kabukları kompost için idealdir." },
-  { ad: "çay posası", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Demlikteki çay posaları ve kahve telveleri organik atıktır." },
-  { ad: "yumurta kabuğu", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Yumurta kabukları toprağa karışabilir." },
-  { ad: "yaprak", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Bahçedeki kurumuş yaprak ve dal parçaları." },
+  { ad: "meyve kabuğu", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Elma, muz, mandalina, portakal kabukları." },
+  { ad: "sebze artığı", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Patates soyukları, marul yaprakları, domates sapları." },
+  { ad: "çay posası", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Demlikteki çay posaları (poşet çaysa kağıdını ayırın)." },
+  { ad: "kahve telvesi", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Filtre kahve veya Türk kahvesi atıkları." },
+  { ad: "yumurta kabuğu", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Yumurta kabukları toprağa mineral verir." },
+  { ad: "ceviz kabuğu", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Kuruyemiş kabukları (tuzsuz ise daha iyidir)." },
+  { ad: "yaprak", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Okul bahçesindeki kurumuş yaprak ve dal parçaları." },
+  { ad: "çekirdek kabuğu", renk: "kahverengi", baslik: "ORGANİK ATIK", bilgi: "Ayçekirdeği vb. kabuklar (yere değil kutuya!)." },
 
   // --- ⚫ SİYAH KUTU (Geri Dönüşmeyen / Diğer Atık) ---
-  { ad: "ıslak mendil", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Plastik lif içerir ve kirlidir. Siyah kutuya (çöpe) atılır." },
-  { ad: "yağlı peçete", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Yağlanmış kağıtlar geri dönüşemez. Siyah kutuya atın." },
-  { ad: "sigara izmariti", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Doğaya en çok zarar veren atıktır. Söndürüp siyah kutuya atın." },
-  { ad: "cips paketi", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Metalize plastik içerdiği için geri dönüşümü zordur, genelde çöpe atılır." },
+  { ad: "ıslak mendil", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Plastik lif içerir ve kirlidir. Asla tuvalete veya geri dönüşüme atmayın." },
+  { ad: "kağıt havlu", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Kullanılmış, kirli kağıt havlular hijyenik atıktır." },
+  { ad: "peçete", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Yemek yağı veya ağız silinen peçeteler çöpe gider." },
+  { ad: "tuvalet kağıdı", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Kullanılmış tuvalet kağıtları çöptür." },
+  { ad: "maske", renk: "siyah", baslik: "TIBBİ/EVSEL ATIK", bilgi: "Kullanılmış maske ve eldivenler siyah kutuya atılmalıdır." },
+  { ad: "sigara izmariti", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Doğaya en çok zarar veren atıktır. İyice söndürüp siyah kutuya atın." },
   { ad: "sakız", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Sakızlar asla yere atılmamalı, kağıda sarılıp siyah kutuya atılmalıdır." },
-  { ad: "kalem tıraş çöpü", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Okullardaki kalem açacağı artıkları siyah kutuya gider." },
-  { ad: "ayna", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Ayna ve porselenler cam kumbarasına (Yeşil) ATILMAZ." },
+  { ad: "kalem tıraş çöpü", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Boyalı tahta ve grafit ucu içerdiği için kağıt değildir. Geri dönüştürülemez, genel atık (siyah) kutusuna atılmalıdır." },
+  { ad: "tükenmez kalem", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Biten plastik kalemler karmaşık yapıda olduğu için genelde çöpe atılır." },
+  { ad: "diş fırçası", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Kompozit plastik olduğu için geri dönüşümü zordur." },
+  { ad: "porselen", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Kırık tabak, porselen kupa ve seramikler CAM DEĞİLDİR." },
+  { ad: "ayna", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Ayna sır kaplıdır, cam kumbarasına atılmaz." },
+  { ad: "ısıya dayanıklı cam", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Borcam vb. ısı camları normal camla karışmamalıdır." },
+  { ad: "alışveriş fişi", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Termal kağıtlar (fiş/fatura) kimyasal içerir, geri dönüşmez." },
+  { ad: "yağlı kağıt", renk: "siyah", baslik: "GERİ DÖNÜŞMEYEN (ÇÖP)", bilgi: "Fırın pişirme kağıtları veya yağlı hamburger kağıtları." },
 
   // --- 🟣 MOR KUTU (Ekmek) ---
   { ad: "bayat ekmek", renk: "mor", baslik: "EKMEK ATIĞI", bilgi: "Ekmekler poşetsiz olarak mor kutuya atılmalıdır." },
-  { ad: "simit parçası", renk: "mor", baslik: "EKMEK ATIĞI", bilgi: "Tüketilemeyecek unlu mamuller mor kutuda toplanır." },
+  { ad: "simit", renk: "mor", baslik: "EKMEK ATIĞI", bilgi: "Yenmeyecek durumdaki simit parçaları." },
   { ad: "poğaça", renk: "mor", baslik: "EKMEK ATIĞI", bilgi: "Küflenmemiş hamur işi artıkları." },
+  { ad: "pide", renk: "mor", baslik: "EKMEK ATIĞI", bilgi: "Kurumuş pide parçaları." },
 
   // --- 🔴 KIRMIZI KUTU (Atık Pil & Tehlikeli) ---
   { ad: "pil", renk: "kirmizi", baslik: "ATIK PİL", bilgi: "Kalem piller toprağı zehirler. Okul veya marketteki kırmızı kutuya atın." },
-  { ad: "telefon bataryası", renk: "kirmizi", baslik: "ATIK PİL / E-ATIK", bilgi: "Eski bataryalar patlama riski taşır, pil kutusuna atılmalıdır." },
-  { ad: "saat pili", renk: "kirmizi", baslik: "ATIK PİL", bilgi: "Düğme piller yutulma tehlikesi taşır, güvenli şekilde kırmızı kutuya atın." },
+  { ad: "kalem pil", renk: "kirmizi", baslik: "ATIK PİL", bilgi: "AA ve AAA piller." },
+  { ad: "düğme pil", renk: "kirmizi", baslik: "ATIK PİL", bilgi: "Saat ve tartı pilleri." },
+  { ad: "batarya", renk: "kirmizi", baslik: "E-ATIK", bilgi: "Şişmiş veya bitmiş telefon bataryaları." },
+  { ad: "powerbank", renk: "kirmizi", baslik: "E-ATIK", bilgi: "Taşınabilir şarj cihazları elektronik atık noktalarına verilmelidir." },
+  { ad: "elektronik", renk: "kirmizi", baslik: "E-ATIK", bilgi: "Eski kulaklık, şarj kablosu, fare (mouse) gibi e-atıklar." },
+  { ad: "toner", renk: "kirmizi", baslik: "TEHLİKELİ ATIK", bilgi: "Yazıcı tonerleri ve kartuşları özel toplama kutularına." },
+  { ad: "ampul", renk: "kirmizi", baslik: "TEHLİKELİ ATIK", bilgi: "Floresan ve tasarruflu ampuller kırılmadan teslim edilmelidir." },
 
   // --- ⚪ BEYAZ KUTU (Yemek Artığı - Hayvanlar İçin) ---
-  { ad: "makarna", renk: "beyaz", baslik: "YEMEK ARTIĞI", bilgi: "Sokak hayvanları için ayrılan temiz yemekler (kürdansız)." },
+  { ad: "makarna", renk: "beyaz", baslik: "YEMEK ARTIĞI", bilgi: "Sokak hayvanları için ayrılan soslanmamış/temiz makarna." },
   { ad: "pilav", renk: "beyaz", baslik: "YEMEK ARTIĞI", bilgi: "Bozulmamış ve temiz pilav artıkları." },
-  { ad: "et kemik", renk: "beyaz", baslik: "YEMEK ARTIĞI", bilgi: "Hayvan dostlarımız için et ve kemik artıkları beyaz kutuya." }
+  { ad: "et", renk: "beyaz", baslik: "YEMEK ARTIĞI", bilgi: "Pişmiş et parçaları (baharatsız)." },
+  { ad: "kemik", renk: "beyaz", baslik: "YEMEK ARTIĞI", bilgi: "Köpekler için uygun kemik artıkları." },
+  { ad: "sulu yemek", renk: "beyaz", baslik: "YEMEK ARTIĞI", bilgi: "Hayvanlara uygun, aşırı yağlı ve baharatlı olmayan yemekler." }
 ];
 
 // -----------------------------
@@ -342,4 +380,3 @@ if (bulBtn) {
 }
 
 if (temizleBtn) temizleBtn.style.opacity = input && input.value ? 1 : 0;
-
