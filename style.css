@@ -222,6 +222,30 @@ h1 {
     width: 40px;
     height: 40px;
   }
+/* 🔰 Logo + Başlık üst üste */
+.logo-baslik {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+/* Logo */
+.site-logo {
+  width: 56px;          /* ideal boy */
+  height: auto;
+}
+
+/* Başlık (mevcut rengi korur) */
+#appTitle {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  color: #008000;
+}
+
 
 
 
