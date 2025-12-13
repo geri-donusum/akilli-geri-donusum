@@ -7,15 +7,9 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <!-- 🔰 BAŞLIK + İKON (tıklanınca sayfa yenilenir) -->
-  <h1 id="appTitle" class="site-baslik" onclick="location.reload()">
-    <img src="assets/geri-donusum.png" alt="Geri Dönüşüm" class="logo">
-    Atık Rehberi
-  </h1>
+  <h1 id="appTitle">♻️ Atık Rehberi</h1>
 
   <div class="arama-alani">
-
     <!-- 🔹 INPUT + X AYNI KUTUDA -->
     <div class="input-kapsayici">
       <input
@@ -27,11 +21,11 @@
       <button type="button" class="temizle-btn" onclick="temizleInput()">×</button>
     </div>
 
-    <!-- 🔹 ÖNERİLER (input altı) -->
-    <div class="suggestion-box"></div>
-
-    <!-- 🔹 Kutuyu Göster (önerilerin ALTINDA) -->
+    <!-- 🔹 Kutuyu Göster butonu -->
     <button id="bulBtn" type="button" onclick="bul()">Kutuyu Göster</button>
+
+    <!-- 🔹 Öneriler -->
+    <div class="suggestion-box"></div>
   </div>
 
   <div id="sonuc"></div>
