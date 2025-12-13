@@ -9,7 +9,7 @@ body {
 h1 {
   color: #008000;
   margin-bottom: 15px;
-  font-size: 24px;
+  font-size: 28px;
   cursor: pointer;
   user-select: none;
 }
@@ -222,4 +222,5 @@ h1 {
     width: 30px;
     height: 30px;
   }
+
 
