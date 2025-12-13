@@ -200,3 +200,17 @@ h1 {
     opacity: 1 !important;
   }
 }
+/* 🟢 Başlık + logo */
+.baslik {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+/* 🟢 Logo boyutu (her yerde aynı) */
+.logo {
+  width: 34px;
+  height: 34px;
+}
