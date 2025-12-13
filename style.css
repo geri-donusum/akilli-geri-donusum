@@ -209,8 +209,17 @@ h1 {
   cursor: pointer;
 }
 
-/* 🟢 Logo boyutu (her yerde aynı) */
+/* 🟢 Logo boyutu (devasa olmasını engeller) */
 .logo {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+/* Mobilde biraz küçülsün */
+@media (max-width: 768px) {
+  .logo {
+    width: 30px;
+    height: 30px;
+  }
 }
