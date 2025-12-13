@@ -211,16 +211,17 @@ h1 {
 
 /* 🟢 Logo boyutu (devasa olmasını engeller) */
 .logo {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
 }
 
 /* Mobilde biraz küçülsün */
 @media (max-width: 768px) {
   .logo {
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
   }
+
 
 
