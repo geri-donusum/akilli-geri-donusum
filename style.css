@@ -241,6 +241,9 @@ h1 {
 .arama-alani {
   margin-top: 12px; /* SADECE yazı ↔ arama */
 }
+.logo-baslik {
+  cursor: pointer;
+}
 
 
 
