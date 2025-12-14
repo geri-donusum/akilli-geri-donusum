@@ -211,8 +211,8 @@ h1 {
 
 /* 🟢 Logo boyutu (devasa olmasını engeller) */
 .logo {
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   object-fit: contain;
 }
 
@@ -223,3 +223,4 @@ h1 {
     height: 30px;
   }
 }
+
