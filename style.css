@@ -219,8 +219,8 @@ h1 {
 /* Mobilde biraz küçülsün */
 @media (max-width: 768px) {
   .logo {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
   }
 }
 /* Logo üstte, yazı altta */
@@ -241,6 +241,7 @@ h1 {
 .arama-alani {
   margin-top: 12px; /* SADECE yazı ↔ arama */
 }
+
 
 
 
