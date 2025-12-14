@@ -223,4 +223,12 @@ h1 {
     height: 30px;
   }
 }
+/* Logo üstte, yazı altta */
+.logo-baslik {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px; /* logo ile yazı arası */
+}
+
 
