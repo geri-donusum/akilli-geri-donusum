@@ -211,8 +211,8 @@ h1 {
 
 /* 🟢 Logo boyutu (devasa olmasını engeller) */
 .logo {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
 }
 
@@ -241,6 +241,7 @@ h1 {
 .arama-alani {
   margin-top: 12px; /* SADECE yazı ↔ arama */
 }
+
 
 
 
