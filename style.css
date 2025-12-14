@@ -244,9 +244,6 @@ h1 {
 #appTitle {
   margin: 6px 0 0 0;
   font-size: 28px;
-
-
-
-
-
-
+  font-weight: 800;
+  color: #008000;
+}
