@@ -228,13 +228,14 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px; /* logo ile yazı arası */
+  gap: 35px; /* logo ile yazı arası */
 }
 .site-logo {
   max-width: 80px;   /* logo için güvenli üst sınır */
   height: auto;
   display: block;
 }
+
 
 
 
