@@ -234,7 +234,7 @@ h1 {
 
 /* LOGO BOYUT SINIRI */
 .site-logo {
-  width: 80px;        /* masaüstü ideal */
+  width: 30px;        /* masaüstü ideal */
   max-width: 25vw;    /* mobilde taşmayı engeller */
   height: auto;
   display: block;
@@ -247,3 +247,4 @@ h1 {
   font-weight: 800;
   color: #008000;
 }
+
