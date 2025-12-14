@@ -1,57 +1,38 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Atık Rehberi</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Atık Rehberi</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
- <!-- LOGO + BAŞLIK -->
-<div class="logo-alan">
-<a href="index.html" class="logo-link">
-<img
-src="logo.png"
-alt="Atık Rehberi Logo"
-class="site-logo"
- />
-</a>
-<h1 id="appTitle">Atık Rehberi</h1>
+  <div class="logo-baslik" onclick="location.reload()">
+  <img src="logo.png" alt="Atık Rehberi Logo" class="site-logo">
+  <h1 id="appTitle">Atık Rehberi</h1>
 </div>
 
-<!-- ARAMA ALANI -->
-<div class="arama-alani">
+  <div class="arama-alani">
+    <!-- 🔹 INPUT + X AYNI KUTUDA -->
+    <div class="input-kapsayici">
+      <input
+        type="text"
+        id="inputAtik"
+        placeholder="Atık adını yaz..."
+        autocomplete="off"
+      />
+      <button type="button" class="temizle-btn" onclick="temizleInput()">×</button>
+    </div>
 
- <div class="input-kapsayici">
- <input
-  type="text"
-  id="inputAtik"
-  placeholder="Atık adını yaz..."
-  autocomplete="off"
-   />
-  <button
-  type="button"
-  class="temizle-btn"
-  onclick="temizleInput()"
-  >
-  ×
-  </button>
-  </div>
+    <!-- 🔹 Kutuyu Göster butonu -->
+    <button id="bulBtn" type="button" onclick="bul()">Kutuyu Göster</button>
 
-  <button
-  id="bulBtn"
-  type="button"
-  onclick="bul()"
-  >
-  Kutuyu Göster
-  </button>
-
-  <div class="suggestion-box"></div>
+    <!-- 🔹 Öneriler -->
+    <div class="suggestion-box"></div>
   </div>
 
   <div id="sonuc"></div>
 
   <script src="script.js"></script>
-  </body>
-  </html>
+</body>
+</html>
