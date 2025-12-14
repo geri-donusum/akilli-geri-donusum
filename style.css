@@ -228,7 +228,7 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px; /* logo ile yazı arası */
+  gap: 4px; /* logo ile yazı arası */
 }
 .site-logo {
   max-width: 80px;   /* logo için güvenli üst sınır */
@@ -236,8 +236,9 @@ h1 {
   display: block;
 }
 .logo-baslik h1 {
-  margin: 2;
+  margin: 0;
 }
+
 
 
 
