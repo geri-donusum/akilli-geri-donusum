@@ -205,7 +205,7 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 100px;
+  gap: 10px;
   cursor: pointer;
 }
 
@@ -235,6 +235,7 @@ h1 {
   height: auto;
   display: block;
 }
+
 
 
 
