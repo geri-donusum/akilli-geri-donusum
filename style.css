@@ -211,23 +211,15 @@ h1 {
 
 /* 🟢 Logo boyutu (devasa olmasını engeller) */
 .logo {
-  width: 60px;
-  height: 60px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
 }
 
 /* Mobilde biraz küçülsün */
 @media (max-width: 768px) {
   .logo {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
   }
-/* 🔰 Logo + Başlık üst üste */
-.logo-baslik {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 15px;
-  cursor: pointer;
 }
