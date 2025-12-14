@@ -7,13 +7,24 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="logo-baslik" onclick="location.reload()">
-  <img src="logo.png" alt="Atık Rehberi Logo" class="site-logo">
-  <h1 id="appTitle">Atık Rehberi</h1>
-</div>
 
+  <!-- 🔰 LOGO + BAŞLIK -->
+  <div class="logo-baslik">
+    <img
+      src="logo.png"
+      alt="Atık Rehberi Logo"
+      class="site-logo"
+      onclick="location.reload()"
+    />
+
+    <h1 id="appTitle" onclick="location.reload()">
+      Atık Rehberi
+    </h1>
+  </div>
+
+  <!-- 🔍 ARAMA ALANI -->
   <div class="arama-alani">
-    <!-- 🔹 INPUT + X AYNI KUTUDA -->
+
     <div class="input-kapsayici">
       <input
         type="text"
@@ -21,13 +32,20 @@
         placeholder="Atık adını yaz..."
         autocomplete="off"
       />
-      <button type="button" class="temizle-btn" onclick="temizleInput()">×</button>
+      <button
+        type="button"
+        class="temizle-btn"
+        onclick="temizleInput()"
+        aria-label="Temizle"
+      >
+        ×
+      </button>
     </div>
 
-    <!-- 🔹 Kutuyu Göster butonu -->
-    <button id="bulBtn" type="button" onclick="bul()">Kutuyu Göster</button>
+    <button id="bulBtn" type="button" onclick="bul()">
+      Kutuyu Göster
+    </button>
 
-    <!-- 🔹 Öneriler -->
     <div class="suggestion-box"></div>
   </div>
 
