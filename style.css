@@ -231,21 +231,3 @@ h1 {
   margin-bottom: 15px;
   cursor: pointer;
 }
-
-/* LOGO BOYUT SINIRI */
-.site-logo {
-  width: 30px;        /* masaüstü ideal */
-  max-width: 10vw;    /* mobilde taşmayı engeller */
-  height: auto;
-  display: block;
-}
-
-/* Başlık */
-#appTitle {
-  margin: 6px 0 0 0;
-  font-size: 28px;
-  font-weight: 800;
-  color: #008000;
-}
-
-
